@@ -7,7 +7,15 @@ yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarc
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-4.0.3-1-1.x86_64.rpm
+export R_VERSION=4.0.3
+
+yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
+
+# We also need to add this to the PATH since it gets installed into /opt by default.
+# We'll take the shortcut of just linking it to /usr/local/bin.  If we don't do this
+# then rstudio-server won't start
+
+ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/
 
 # To compile R packages we need the development tools
 yum -y groupinstall "Development Tools"
