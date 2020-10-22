@@ -29,6 +29,9 @@ yum -y groupinstall "Development Tools"
 
 yum -y install https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1093-x86_64.rpm
 
+# Change the logo on the login page to ours
+cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
+
 # Create the user we're going to use and make sure their home
 # directory is also created since useradd doesn't do this by
 # default
