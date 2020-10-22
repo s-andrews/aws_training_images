@@ -1,8 +1,13 @@
 # R is in EPEL so we need to set that repository up first
 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
-# Now we can install R
-yum -y install R
+# Now we can install R.  We won't use the version in CentOS or EPEL
+# since that gets out of date.  Instead we'll use the version which 
+# rstudio compile which will be more up to date
+#
+# Note that we will need to update this if we want to move to a newer version of
+# R
+yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-4.0.3-1-1.x86_64.rpm
 
 # To compile R packages we need the development tools
 yum -y groupinstall "Development Tools"
