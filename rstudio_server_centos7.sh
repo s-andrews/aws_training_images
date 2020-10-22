@@ -51,5 +51,9 @@ sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
 # domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
 
-# We should install some basic R packages which everything will need.
+# We should install some basic R packages which everything will need. This also means
+# installing some OS packages which are needed to build them.
+yum -y install libxml2-devel openssl-devel
+/usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
+
 
