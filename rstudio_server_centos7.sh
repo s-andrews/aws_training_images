@@ -50,6 +50,27 @@ sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd
 # We need to configure apache to proxy the RStudio Server on port 8787 onto the
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
 # domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
+yum -y install httpd
+systemctl enable httpd
+
+# Remove the config for the holding screen
+rm /etc/httpd/conf.d/welcome.conf
+
+# Allow apache network access in selinux so it can act as a proxy
+setsebool -P httpd_can_network_connect on
+
+# Write the config file we need 
+
+echo "
+<VirtualHost *:80>
+  ProxyPreserveHost On
+  ProxyRequests Off
+  ProxyPass / http://127.0.0.1:8787/
+  ProxyPassReverse / http://127.0.0.1:8787/
+</VirtualHost>
+" > /etc/httpd/conf.d/rstudio.conf
+
+systemctl start httpd
 
 # We should install some basic R packages which everything will need. This also means
 # installing some OS packages which are needed to build them.
