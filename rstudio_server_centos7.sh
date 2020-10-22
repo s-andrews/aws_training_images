@@ -7,7 +7,16 @@ yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarc
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-4.0.3-1-1.x86_64.rpm
+export R_VERSION=4.0.3
+
+yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
+
+# We also need to add this to the PATH since it gets installed into /opt by default.
+# We'll take the shortcut of just linking it to /usr/local/bin.  If we don't do this
+# then rstudio-server won't start
+
+ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/
+ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/
 
 # To compile R packages we need the development tools
 yum -y groupinstall "Development Tools"
@@ -41,6 +50,31 @@ sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd
 # We need to configure apache to proxy the RStudio Server on port 8787 onto the
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
 # domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
+yum -y install httpd
+systemctl enable httpd
 
-# We should install some basic R packages which everything will need.
+# Remove the config for the holding screen
+rm /etc/httpd/conf.d/welcome.conf
+
+# Allow apache network access in selinux so it can act as a proxy
+setsebool -P httpd_can_network_connect on
+
+# Write the config file we need 
+
+echo "
+<VirtualHost *:80>
+  ProxyPreserveHost On
+  ProxyRequests Off
+  ProxyPass / http://127.0.0.1:8787/
+  ProxyPassReverse / http://127.0.0.1:8787/
+</VirtualHost>
+" > /etc/httpd/conf.d/rstudio.conf
+
+systemctl start httpd
+
+# We should install some basic R packages which everything will need. This also means
+# installing some OS packages which are needed to build them.
+yum -y install libxml2-devel openssl-devel
+/usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
+
 
