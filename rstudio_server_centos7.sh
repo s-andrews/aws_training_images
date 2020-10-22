@@ -16,6 +16,7 @@ yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64
 # then rstudio-server won't start
 
 ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/
+ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/
 
 # To compile R packages we need the development tools
 yum -y groupinstall "Development Tools"
