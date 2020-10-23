@@ -33,6 +33,11 @@ curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
 yum install -y nodejs
 npm install -g configurable-http-proxy
 
+# Put some of the most common packages in place. It looks like
+# seaborn already depends on all of the other relevant stuff so
+# this covers pretty much everything on its own.
+pip3 install seaborn
+
 
 # Start the actual server (need to find a better way to do this)
 # /usr/local/bin isn't in the default path so we need to add it at
