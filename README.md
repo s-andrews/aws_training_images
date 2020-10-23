@@ -24,7 +24,7 @@ The steps to do this will be as follows:
 
 7. Move into the new repository folder ```cd aws_training_images```
 
-8. Execute the script for the image you want to build eg ```./rstudio_server_centos7.sh```
+8. Execute the script for the image you want to build as root eg ```sudo ./rstudio_server_centos7.sh```
 
 9. Once the build is complete visit the IP of the server in a web browser (eg http://1.2.3.4)
 
