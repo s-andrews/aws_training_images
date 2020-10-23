@@ -44,7 +44,7 @@ pip3 install seaborn
 perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" login.html
 
 # We can also swap out the logo so we can brand this with our logo
-
+cp images/bioinformatics_logo_225x80.png /usr/local/share/jupyterhub/static/images/jupyterhub-80.png
 
 # We need to configure apache to proxy the Jupyterhub server on port 8000 onto the
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
@@ -72,9 +72,32 @@ echo "
 systemctl start httpd
 
 
-# Start the actual server (need to find a better way to do this)
-# /usr/local/bin isn't in the default path so we need to add it at
-# run time.
-sudo sh -c "export PATH=$PATH:/usr/local/bin/;jupyterhub"
+# Start the actual server. We do this by creating a systemd 
+# unit for it and then starting that.
+
+echo "#!/bin/bash
+export PATH=$PATH:/usr/local/bin/
+jupyterhub > /var/log/jupyterhub 2>&1
+" > /usr/local/sbin/start_jupyterhub.sh
+
+chmod 755 /usr/local/sbin/start_jupyterhub.sh
+
+echo "[Unit]
+Description=Starts the jupyterhub service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/start_jupyterhub.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+" > /etc/systemd/system/jupyterhub.service
+
+# Now register and start the service
+systemctl daemon-reload
+systemctl enable jupyterhub
+systemctl start jupyterhub
 
 
