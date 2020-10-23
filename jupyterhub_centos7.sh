@@ -38,6 +38,39 @@ npm install -g configurable-http-proxy
 # this covers pretty much everything on its own.
 pip3 install seaborn
 
+# Since we're on AWS we're going to end up using plain HTTP for our
+# connections.  Jupyterhub will give us a warning on every login about
+# this which we can't do anything about, so let's hide it
+perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" login.html
+
+# We can also swap out the logo so we can brand this with our logo
+
+
+# We need to configure apache to proxy the Jupyterhub server on port 8000 onto the
+# main web server on port 80.  We can't set up SSL since we don't have a specific 
+# domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
+yum -y install httpd
+systemctl enable httpd
+
+# Remove the config for the holding screen
+rm /etc/httpd/conf.d/welcome.conf
+
+# Allow apache network access in selinux so it can act as a proxy
+setsebool -P httpd_can_network_connect on
+
+# Write the config file we need 
+
+echo "
+<VirtualHost *:80>
+  ProxyPreserveHost On
+  ProxyRequests Off
+  ProxyPass / http://127.0.0.1:8000/
+  ProxyPassReverse / http://127.0.0.1:8000/
+</VirtualHost>
+" > /etc/httpd/conf.d/jupyterhub.conf
+
+systemctl start httpd
+
 
 # Start the actual server (need to find a better way to do this)
 # /usr/local/bin isn't in the default path so we need to add it at
