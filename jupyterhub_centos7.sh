@@ -41,7 +41,7 @@ pip3 install seaborn
 # Since we're on AWS we're going to end up using plain HTTP for our
 # connections.  Jupyterhub will give us a warning on every login about
 # this which we can't do anything about, so let's hide it
-perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" login.html
+perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" /usr/local/share/jupyterhub/templates/login.html
 
 # We can also swap out the logo so we can brand this with our logo
 cp images/bioinformatics_logo_225x80.png /usr/local/share/jupyterhub/static/images/jupyterhub-80.png
