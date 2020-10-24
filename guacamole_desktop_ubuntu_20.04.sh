@@ -4,6 +4,30 @@ sudo apt update
 
 #/bin/bash
 
+# Because we have to link to the account we ultimately want to use we'll switch straight
+# to that at the start rather than using the default ubuntu account
+
+# Create the user we're going to use and make sure their home
+# directory is also created since useradd doesn't do this by
+# default
+
+useradd -m -G sudo -d /home/student -s /bin/bash student
+
+# Set their password since we don't want a hardcoded password.  To give some
+# randomness we'll use the instance ID of the server as the initial password
+# so the user can see that in their EC2 console.  The user should still change
+# this once they've logged in for the first time.
+
+# We use the AWS link-local HTTP API to retrieve the current instance ID.  This
+# will only work on the actual AWS image.  This bit will obviously fail if you're
+# not on AWS
+
+export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+echo student:$INSTANCE | sudo chpasswd
+
+# We now have the student account available to us.  We'll do some basic building in 
+# ubuntu but then switch over when we get to VNC stuff.
+
 # Build guacamole from source since there isn't an ubuntu
 # package we can use yet.
 sudo apt -y install build-essential libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
@@ -57,14 +81,13 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # relates to the username we're running under.  We might need to make a 
 # student account first and do the rest of this in there?
 
-# pw test = 098f6bcd4621d373cade4e832627b4f6
-
+export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
 echo "<user-mapping>
 
     <!-- Per-user authentication and config information -->
 BBB    <authorize
          username=\"student\"
-         password=\"098f6bcd4621d373cade4e832627b4f6\"
+         password=\"$PWMD\"
          encoding=\"md5\">
 
        <connection name=\"default\">
@@ -79,11 +102,10 @@ BBB    <authorize
 
 sudo systemctl restart tomcat9 guacd
 
+# Now set up VNC
 sudo apt -y install xfce4 xfce4-goodies firefox
 
 sudo apt -y install tigervnc-standalone-server
-
-# Work out how to set the password programatically
 
 sudo systemctl restart tomcat9 guacd
 
@@ -93,7 +115,7 @@ echo "
 xrdb $HOME/.Xresources
 startxfce4 &
 
-" > ~/.vnc/xstartup
+" > ~student/.vnc/xstartup
 
 
 echo "
