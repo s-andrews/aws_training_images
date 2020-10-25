@@ -85,7 +85,7 @@ export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
 echo "<user-mapping>
 
     <!-- Per-user authentication and config information -->
-BBB    <authorize
+    <authorize
          username=\"student\"
          password=\"$PWMD\"
          encoding=\"md5\">
@@ -97,26 +97,34 @@ BBB    <authorize
          <param name=\"password\">testtest</param>
        </connection>
     </authorize>
+</user-mapping>
 " > /etc/guacamole/user-mapping.xml
 
 
 sudo systemctl restart tomcat9 guacd
 
 # Now set up VNC
-sudo apt -y install xfce4 xfce4-goodies firefox
-
-sudo apt -y install tigervnc-standalone-server
+# TODO: Need to work out how to automatically select a display manager so
+# it doesn't prompt for it
+sudo apt -y install xfce4 xfce4-goodies firefox tigervnc-standalone-server
 
 sudo systemctl restart tomcat9 guacd
+
+sudo mkdir ~student/.vnc
 
 echo "
 #!/bin/sh
 
 xrdb $HOME/.Xresources
-startxfce4 &
+dbus-launch startxfce4 &
 
 " > ~student/.vnc/xstartup
 
+# Set the VNC password to the instance ID
+
+sudo sh -c "echo $INSTANCE | vncpasswd -f > ~student/.vnc/passwd"
+
+chown -R student:student ~student/.vnc
 
 echo "
 [Unit]
@@ -127,7 +135,7 @@ After=syslog.target network.target
 Type=forking
 User=username
 Group=username
-WorkingDirectory=/home/ubuntu
+WorkingDirectory=/home/student
 
 ExecStartPre=-/usr/bin/vncserver -kill :%i > /dev/null 2>&1
 ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 -localhost :%i
