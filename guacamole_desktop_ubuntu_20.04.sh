@@ -131,6 +131,9 @@ sudo chmod 600 ~student/.vnc/passwd
 # (they're owned by root at the moment)
 sudo chown -R student:student ~student/.vnc
 
+# Reset the XFCE background
+sudo cp ~/aws_training_images/images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
+
 # Now we can start the VNC server
 sudo su student -c 'vncserver -depth 24 -geometry 1280x800'
 
