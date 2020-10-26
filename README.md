@@ -18,13 +18,13 @@ The steps to do this will be as follows:
 
 4. Once the instance has started (it will take a couple of minutes, connect to the server using something like ```ssh -i my_key.pem centos@1.2.3.4```
 
-5. Start by installing git using the OS package manager, on CentOS this would be ```sudo yum -y install git```
+5. Start by installing git using the OS package manager, on CentOS this would be ```sudo yum -y install git```. On ubuntu git is already there in the default image.
 
 6. Clone the AWS training images repository ```git clone https://github.com/s-andrews/aws_training_images.git```
 
 7. Move into the new repository folder ```cd aws_training_images```
 
-8. Execute the script for the image you want to build as root eg ```sudo ./rstudio_server_centos7.sh```
+8. Execute the script for the image you want to build. It's a good idea to do this as a nohup command and redirect the output to a log file ```nohup ./rstudio_server_centos7.sh > ~/build.log &```
 
 9. Once the build is complete visit the IP of the server in a web browser (eg http://1.2.3.4)
 
