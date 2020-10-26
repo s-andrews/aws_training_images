@@ -131,6 +131,46 @@ sudo chmod 600 ~student/.vnc/passwd
 # (they're owned by root at the moment)
 sudo chown -R student:student ~student/.vnc
 
+# Reset the XFCE background
+sudo cp ~/aws_training_images/images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
+
+# Set up apache as a proxy server
+sudo apt -y install apache2
+
+# Enable the apache modules we need
+sudo a2enmod proxy proxy_http headers proxy_wstunnel
+
+# Create the config file
+
+sudo sh -c 'echo "<VirtualHost *:80>
+      ErrorLog ${APACHE_LOG_DIR}/guacamole_error.log
+      CustomLog ${APACHE_LOG_DIR}/guacamole_access.log combined
+
+      <Location />
+          Require all granted
+          ProxyPass http://localhost:8080/guacamole/ flushpackets=on
+          ProxyPassReverse http://localhost:8080/guacamole/
+      </Location>
+
+     <Location /websocket-tunnel>
+         Require all granted
+         ProxyPass ws://localhost:8080/guacamole/websocket-tunnel
+         ProxyPassReverse ws://localhost:8080/guacamole/websocket-tunnel
+     </Location>
+
+     Header always unset X-Frame-Options
+</VirtualHost>" > /etc/apache2/sites-available/guacamole.conf
+'
+
+# Enable the new virtual host
+sudo a2ensite guacamole.conf
+
+# Remove the default virtual host so guacamole is found first
+sudo mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/zzz-default.conf
+
+# Restart apache
+sudo systemctl restart apache2
+
 # Now we can start the VNC server
 sudo su student -c 'vncserver -depth 24 -geometry 1280x800'
 
