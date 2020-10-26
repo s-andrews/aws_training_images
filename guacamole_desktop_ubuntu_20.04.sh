@@ -1,7 +1,4 @@
 ### THIS IS NOT FINISHED AND DOESN'T WORK YET ###
-
-sudo apt update
-
 #/bin/bash
 
 # Because we have to link to the account we ultimately want to use we'll switch straight
@@ -11,7 +8,7 @@ sudo apt update
 # directory is also created since useradd doesn't do this by
 # default
 
-useradd -m -G sudo -d /home/student -s /bin/bash student
+sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 
 # Set their password since we don't want a hardcoded password.  To give some
 # randomness we'll use the instance ID of the server as the initial password
@@ -30,6 +27,7 @@ echo student:$INSTANCE | sudo chpasswd
 
 # Build guacamole from source since there isn't an ubuntu
 # package we can use yet.
+sudo apt update
 sudo apt -y install build-essential libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
 
 wget http://mirror.cc.columbia.edu/pub/software/apache/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
@@ -67,14 +65,14 @@ sudo systemctl restart tomcat9 guacd
 # Make the configuration files for guacamole
 sudo mkdir /etc/guacamole/
 
-echo "# Hostname and port of guacamole proxy
+sudo sh -c 'echo "# Hostname and port of guacamole proxy
 guacd-hostname: localhost
 guacd-port:     4822
 
 # Auth provider class (authenticates user/pass combination, needed if using the provided login screen)
 auth-provider: net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvider
 basic-user-mapping: /etc/guacamole/user-mapping.xml
-" > /etc/guacamole/guacamole.properties
+" > /etc/guacamole/guacamole.properties'
 
 # Here we need to provide the user login details.  We'll need to make an
 # md5 hash from the password we want to use.  I'm not sure yet how this 
@@ -82,7 +80,10 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # student account first and do the rest of this in there?
 
 export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
-echo "<user-mapping>
+
+# Note that we need the -E on sudo so the PWMD variable
+# is passed through to root's environment.
+sudo -E sh -c 'echo "<user-mapping>
 
     <!-- Per-user authentication and config information -->
     <authorize
@@ -98,57 +99,34 @@ echo "<user-mapping>
        </connection>
     </authorize>
 </user-mapping>
-" > /etc/guacamole/user-mapping.xml
-
-
-sudo systemctl restart tomcat9 guacd
+" > /etc/guacamole/user-mapping.xml'
 
 # Now set up VNC
-# TODO: Need to work out how to automatically select a display manager so
-# it doesn't prompt for it
-sudo apt -y install xfce4 xfce4-goodies firefox tigervnc-standalone-server
+# The additional env variable should stop apt from prompting to set a
+# display manager and will hopefully just pick a default (I don't really
+# care what it picks)
+sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies firefox tigervnc-standalone-server
 
 sudo systemctl restart tomcat9 guacd
 
 sudo mkdir ~student/.vnc
 
-echo "
+sudo sh -c 'echo "
 #!/bin/sh
 
 xrdb $HOME/.Xresources
 dbus-launch startxfce4 &
 
-" > ~student/.vnc/xstartup
+" > ~student/.vnc/xstartup'
 
 # Set the VNC password to the instance ID
+# This doesn't seem to work properly.  VNC doesn't recognise this, so there's something
+# else to fix here...
+sudo -E sh -c "echo $INSTANCE | vncpasswd -f > ~student/.vnc/passwd"'
 
-sudo sh -c "echo $INSTANCE | vncpasswd -f > ~student/.vnc/passwd"
+sudo chown -R student:student ~student/.vnc
 
-chown -R student:student ~student/.vnc
-
-echo "
-[Unit]
-Description=a wrapper to launch an X server for VNC
-After=syslog.target network.target
-
-[Service]
-Type=forking
-User=username
-Group=username
-WorkingDirectory=/home/student
-
-ExecStartPre=-/usr/bin/vncserver -kill :%i > /dev/null 2>&1
-ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 -localhost :%i
-ExecStop=/usr/bin/vncserver -kill :%i
-
-[Install]
-WantedBy=multi-user.target
-" > /etc/systemd/system/vncserver@.service
-
-vncserver -kill :1
-
-sudo systemctl enable vncserver@1.service
-sudo systemctl start vncserver@1.service
+sudo su student -c 'vncserver -depth 24 -geometry 1280x800 --PasswordFile=/home/student/.vnc/passwd'
 
 # This fails at this stage, but it's not clear to me why.  The stand alone
 # VNC command works so I can't see why the version in the unit fails.  The
