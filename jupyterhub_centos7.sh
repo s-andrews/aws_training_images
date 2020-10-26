@@ -41,40 +41,37 @@ pip3 install seaborn
 # Since we're on AWS we're going to end up using plain HTTP for our
 # connections.  Jupyterhub will give us a warning on every login about
 # this which we can't do anything about, so let's hide it
-perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" login.html
+perl -i.bak -pe "s/<p id='insecure-login-warning' class='hidden'>/<p class='hidden'>/" /usr/local/share/jupyterhub/templates/login.html
 
 # We can also swap out the logo so we can brand this with our logo
+cp images/bioinformatics_logo_225x80.png /usr/local/share/jupyterhub/static/images/jupyterhub-80.png
 
+# Start the actual server. We do this by creating a systemd 
+# unit for it and then starting that.
 
-# We need to configure apache to proxy the Jupyterhub server on port 8000 onto the
-# main web server on port 80.  We can't set up SSL since we don't have a specific 
-# domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
-yum -y install httpd
-systemctl enable httpd
+echo "#!/bin/bash
+export PATH=$PATH:/usr/local/bin/
+jupyterhub --port=80 > /var/log/jupyterhub 2>&1
+" > /usr/local/sbin/start_jupyterhub.sh
 
-# Remove the config for the holding screen
-rm /etc/httpd/conf.d/welcome.conf
+chmod 755 /usr/local/sbin/start_jupyterhub.sh
 
-# Allow apache network access in selinux so it can act as a proxy
-setsebool -P httpd_can_network_connect on
+echo "[Unit]
+Description=Starts the jupyterhub service
+After=network.target
 
-# Write the config file we need 
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/start_jupyterhub.sh
+TimeoutStartSec=0
 
-echo "
-<VirtualHost *:80>
-  ProxyPreserveHost On
-  ProxyRequests Off
-  ProxyPass / http://127.0.0.1:8000/
-  ProxyPassReverse / http://127.0.0.1:8000/
-</VirtualHost>
-" > /etc/httpd/conf.d/jupyterhub.conf
+[Install]
+WantedBy=default.target
+" > /etc/systemd/system/jupyterhub.service
 
-systemctl start httpd
-
-
-# Start the actual server (need to find a better way to do this)
-# /usr/local/bin isn't in the default path so we need to add it at
-# run time.
-sudo sh -c "export PATH=$PATH:/usr/local/bin/;jupyterhub"
+# Now register and start the service
+systemctl daemon-reload
+systemctl enable jupyterhub
+systemctl start jupyterhub
 
 
