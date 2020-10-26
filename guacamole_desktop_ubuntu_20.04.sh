@@ -120,16 +120,19 @@ dbus-launch startxfce4 &
 " > ~student/.vnc/xstartup'
 
 # Set the VNC password to the instance ID
-# This doesn't seem to work properly.  VNC doesn't recognise this, so there's something
-# else to fix here...
-sudo -E sh -c "echo $INSTANCE | vncpasswd -f > ~student/.vnc/passwd"'
+# The redirection we do here needs BASH rather than just SH
+sudo -E bash -c "vncpasswd -f <<< $INSTANCE > ~student/.vnc/passwd"
 
+# We need to make the passwd file only readable by student otherwise
+# vnc won't accept it and will prompt us to change it when we start
+# the server.
+sudo chmod 600 ~student/.vnc/passwd
+
+# We need to change the newly created vnc files to be owned by student
+# (they're owned by root at the moment)
 sudo chown -R student:student ~student/.vnc
 
-sudo su student -c 'vncserver -depth 24 -geometry 1280x800 --PasswordFile=/home/student/.vnc/passwd'
+# Now we can start the VNC server
+sudo su student -c 'vncserver -depth 24 -geometry 1280x800'
 
-# This fails at this stage, but it's not clear to me why.  The stand alone
-# VNC command works so I can't see why the version in the unit fails.  The
-# only thing which is different is the depth and geometry settings. Also where
-# the %i comes from
 
