@@ -1,4 +1,3 @@
-### THIS IS NOT FINISHED AND DOESN'T WORK YET ###
 #/bin/bash
 
 # Because we have to link to the account we ultimately want to use we'll switch straight
