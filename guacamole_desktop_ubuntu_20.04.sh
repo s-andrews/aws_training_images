@@ -95,7 +95,7 @@ sudo -E sh -c 'echo "<user-mapping>
          <protocol>vnc</protocol>
          <param name=\"hostname\">localhost</param>
          <param name=\"port\">5901</param>
-         <param name=\"password\">testtest</param>
+         <param name=\"password\">$INSTANCE</param>
        </connection>
     </authorize>
 </user-mapping>
