@@ -113,7 +113,7 @@ sudo mkdir ~student/.vnc
 sudo sh -c 'echo "
 #!/bin/sh
 
-xrdb $HOME/.Xresources
+xrdb /home/student/.Xresources
 dbus-launch startxfce4 &
 
 " > ~student/.vnc/xstartup'
