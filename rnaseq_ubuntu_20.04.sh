@@ -17,6 +17,7 @@ sudo mv /opt/hisat2-2.2.1 /opt/hisat2
 sudo ln -s /opt/hisat2/hisat2 /usr/local/bin/
 sudo ln -s /opt/hisat2/hisat2-build /usr/local/bin/
 sudo ln -s /opt/hisat2/extract_splice_sites.py /usr/local/bin/
+sudo ln -s /opt/hisat2/hisat2_extract_splice_sites.py /usr/local/bin/
 
 # Install MultiQC
 sudo apt -y install python3-pip
