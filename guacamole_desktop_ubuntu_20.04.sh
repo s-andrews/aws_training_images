@@ -52,7 +52,8 @@ sudo systemctl start guacd
 # Install the tomcat server which will host the web front end.
 sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
 
-cd
+# Move back into the main directory
+cd ..
 
 # Donwload and install the guacamole web app.
 wget https://downloads.apache.org/guacamole/1.2.0/binary/guacamole-1.2.0.war
