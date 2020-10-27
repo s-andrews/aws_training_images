@@ -133,7 +133,7 @@ sudo chmod 600 ~student/.vnc/passwd
 sudo chown -R student:student ~student/.vnc
 
 # Reset the XFCE background
-sudo cp ~/aws_training_images/images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
+sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
