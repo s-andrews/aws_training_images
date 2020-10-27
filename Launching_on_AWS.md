@@ -52,6 +52,38 @@ The next screen allows you to specify the size of disk which you want to use on 
 When you're finished you can press the "Add Tags" button, and then skip the next screen and press the "Configure Security Group" section.
 
 ### Configure security ###
+The next screen will set up the firewall for your instance.  You need to say what traffic is allowed to get to your new server.  By default your server will only be accessible by SSH, which you don't strictly need (but which might be useful) but you need to make it accessible via HTTP so you can point a web browser to it.
+
+To add the new rule press the "Add Rule" button, then in the Type drop-down select HTTP.  This should be all you need.  Once this is done you can select "Review and Launch" to move to the final checks.
+
+### Launch the server ###
+
+From the review page you can quickly check all of the settings you made and once you're happy you can select "Launch" to start the server.
+
+Before you can launch the server Amazon will make you set up an SSH key which will allow you to log directly in to the server for troubleshooting.  You probably won't need to use this if you're just using the image to run a course, but it's a good idea to have this just in case.  If you've created a key before then you can just select it, but if you haven't then you'll need to make a new key and give it a name.  It will then make you download the key (.pem) file which you should save somewhere safe.
+
+Finally you can press "Launch" to start the server.  You will be taken to a screen where you can see the name of the instance which was created.  You can click on the instance name to be taken to your EC2 dashboard where you will see the details of the instance.  Initially a filter will be set where you can only see the newly launched instance, but you can press the "Clear Filters" button to see all of your instances in this AWS zone.
+
+Your server is now running and the build scripts will start to set everything up.  Depending on the image you choose it may take anything from 5 to 30 minutes to complete configuring the server and downloading all of the data you'll need.
+
+4 Connect to your new instance
+------------------------------
+
+Although your server will move to a "Running" state very quickly, it will take a little time to add the software which allows you to connect to the web interface so be a little patient.
+
+To connect to the server you need to copy the IP address from your EC2 dashboard and paste it into your browsers location bar.  You should then see a login page which will look something like one of those shown below.  To log in to the server use the following credentials:
+
+* **Username**: ```student```
+* **Password**: ```[The instance ID for your server]```
+
+You can copy both of these from your EC2 dashboard.  Once you've logged in you should then see the main interface for your environment.
+
+5 Shutting down your instance
+-----------------------------
+
+You will be charged by the hour for the instances you launch, whether or not you are actively making use of them.  You should therefore shut down the servers as soon as you are finished with them.
+
+To shut down an instance go to your EC2 dashboard, find the server you're finished with, right click on it and select "Terminate Instance".  You will have to confirm this, and then your server will be closed down.  You will still see it listed in your dashboard for a short while, but with a state of "Terminated"
 
 
 
