@@ -27,13 +27,34 @@ Next you need to select "Launch a virtual machine on EC2" to start creating your
 ### Select your base image
 All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq_ubuntu_20.04.sh``` uses the Ubunto 20.04 image, and ```rstudio_server_centos7.sh``` uses the CentOS 7 base image.
 
+To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```centos``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
+
 You will then see a list of prices for different server types for that image.  All of the base images we use do not charge for the use of the software (you should see the software costs are all zero), only for the EC2 compute power and storage.  If you see charges for software at this stage then go back and check since you've selected the wrong image.
 
 Press the continue button to move to the next step.
 
 ### Select the instance type ###
 
-To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```centos``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
+You can then select the power of the server you want to run your instance.  You'll see a list of configurations with names like ```t2.medium``` where they differ based on the number of CPUs they have and the amount of memory.  For each of our courses we'll tell you the minimum specification of server you need to use, but you are free to use a better one than that if you prefer.
+
+Importantly, when you've selected the configuration **don't** press the "Review and Launch" button - press the grey "Configure Instance Details" button instead since there are other things you'll need to change.
+
+### Add a configuration script ###
+
+On the next screen "Configure instance details" you can ignore pretty much all of the settings on there.  What you do need to do is to scroll down to the "Advanced Details" section and the "User data" text box.  Into this box you can paste instructions which run when the server is started to configure it.  At the end of this document we have provided for each course image the script you need to paste into this box to get it to configure itself correctly.  If you don't add the correct script to this box then the instance won't configure itself when it starts.
+
+When you've done this press the "Add Storage" button at the bottom.
+
+### Add storage ###
+
+The next screen allows you to specify the size of disk which you want to use on your server.  As with the CPU power we will tell you the minimum amount of storage (in Gigabytes) which you need to add, but you are free to increase this number if you like.  Part of the charge for the server is based around how much storage you use so adding a bigger disk will make the instance more expensive to run.
+
+When you're finished you can press the "Add Tags" button, and then skip the next screen and press the "Configure Security Group" section.
+
+### Configure security ###
+
+
+
 
 
 
