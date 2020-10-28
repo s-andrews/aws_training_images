@@ -173,6 +173,6 @@ sudo mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-availab
 sudo systemctl restart apache2
 
 # Now we can start the VNC server
-sudo su student -c 'vncserver -depth 24 -geometry 1280x800'
+sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
 
 
