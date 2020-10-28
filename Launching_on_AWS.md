@@ -142,6 +142,7 @@ The same configuration is used for the Introduction to R, Advanced R and GGplot 
 ### User Data
 ```
 #!/bin/bash
+sudo yum -y install git
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
 nohup ./rbootcamp_centos7.sh > ~/build.log &
