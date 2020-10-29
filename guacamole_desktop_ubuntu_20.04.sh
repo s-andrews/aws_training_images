@@ -141,7 +141,10 @@ sudo apt -y install apache2
 # Enable the apache modules we need
 sudo a2enmod proxy proxy_http headers proxy_wstunnel
 
-# Create the config file
+# Create the config file.  We proxy everything to port 80
+# except for the image on the login screen which we bypass
+# This can then be retrieved from /var/www/html/images
+# so we can substitute in our own image instead.
 
 sudo sh -c 'echo "<VirtualHost *:80>
       ErrorLog ${APACHE_LOG_DIR}/guacamole_error.log
@@ -151,6 +154,10 @@ sudo sh -c 'echo "<VirtualHost *:80>
           Require all granted
           ProxyPass http://localhost:8080/guacamole/ flushpackets=on
           ProxyPassReverse http://localhost:8080/guacamole/
+      </Location>
+
+      <Location /images/guac-tricolor.png>
+           ProxyPass !
       </Location>
 
      <Location /websocket-tunnel>
@@ -171,6 +178,9 @@ sudo mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-availab
 
 # Restart apache
 sudo systemctl restart apache2
+
+# Copy our logo file into the web root so we can use it
+sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
 
 # Now we can start the VNC server
 sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
