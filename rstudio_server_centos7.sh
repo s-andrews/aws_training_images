@@ -1,5 +1,9 @@
+# This script should be able to be run as a conventional centos user from their
+# home directory (manual installation), or as root from the top of the filesystem
+# (templated installs).
+
 # R is in EPEL so we need to set that repository up first
-yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 # Now we can install R.  We won't use the version in CentOS or EPEL
 # since that gets out of date.  Instead we'll use the version which 
@@ -9,17 +13,17 @@ yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarc
 # R
 export R_VERSION=4.0.3
 
-yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
+sudo -E yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
 # We also need to add this to the PATH since it gets installed into /opt by default.
 # We'll take the shortcut of just linking it to /usr/local/bin.  If we don't do this
 # then rstudio-server won't start
 
-ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/
-ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/
+sudo -E ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/
+sudo -E ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/
 
 # To compile R packages we need the development tools
-yum -y groupinstall "Development Tools"
+sudo yum -y groupinstall "Development Tools"
 
 # Install the RStudio Server RPM from the Rstudio site
 # It would be good if there was a shortcut to the latest
@@ -27,16 +31,16 @@ yum -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-yum -y install https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1093-x86_64.rpm
+sudo yum -y install https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1093-x86_64.rpm
 
 # Change the logo on the login page to ours
-cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
+sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
 
 # Create the user we're going to use and make sure their home
 # directory is also created since useradd doesn't do this by
 # default
 
-useradd -m -d /home/student -s /bin/bash student
+sudo useradd -m -d /home/student -s /bin/bash student
 
 # Set their password since we don't want a hardcoded password.  To give some
 # randomness we'll use the instance ID of the server as the initial password
@@ -47,37 +51,37 @@ useradd -m -d /home/student -s /bin/bash student
 # will only work on the actual AWS image.  This bit will obviously fail if you're
 # not on AWS
 
-yum -y install curl
+sudo yum -y install curl
 sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd --stdin student'
 
 # We need to configure apache to proxy the RStudio Server on port 8787 onto the
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
 # domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
-yum -y install httpd
-systemctl enable httpd
+sudo yum -y install httpd
+sudo systemctl enable httpd
 
 # Remove the config for the holding screen
-rm /etc/httpd/conf.d/welcome.conf
+sudo rm -f /etc/httpd/conf.d/welcome.conf
 
 # Allow apache network access in selinux so it can act as a proxy
-setsebool -P httpd_can_network_connect on
+sudo setsebool -P httpd_can_network_connect on
 
 # Write the config file we need 
 
-echo "
+sudo sh -c 'echo "
 <VirtualHost *:80>
   ProxyPreserveHost On
   ProxyRequests Off
   ProxyPass / http://127.0.0.1:8787/
   ProxyPassReverse / http://127.0.0.1:8787/
 </VirtualHost>
-" > /etc/httpd/conf.d/rstudio.conf
+" > /etc/httpd/conf.d/rstudio.conf'
 
-systemctl start httpd
+sudo systemctl start httpd
 
 # We should install some basic R packages which everything will need. This also means
 # installing some OS packages which are needed to build them.
-yum -y install libxml2-devel openssl-devel
-/usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
+sudo yum -y install libxml2-devel openssl-devel
+sudo /usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
 
 

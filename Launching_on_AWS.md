@@ -113,6 +113,45 @@ To shut down an instance go to your EC2 dashboard, find the server you're finish
 
 ![Are you sure](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/terminate_are_you_sure.png)
 
+Course Configurations
+=====================
+
+Listed below are the settings you need to use for your "User data" when building an image for different courses.  We'll also state the minimum server type and disk size.
+
+RNA-Seq
+-------
+
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./rnaseq_ubuntu_20.04.sh > ~/build.log &
+```
+
+R Courses
+---------
+The same configuration is used for the Introduction to R, Advanced R and GGplot courses.  A separate configuration is used for the Shiny course.
+
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+sudo yum -y install git
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./rbootcamp_centos7.sh > ~/build.log &
+```
+
+
+
+
+
 
 
 
