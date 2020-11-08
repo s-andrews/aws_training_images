@@ -180,7 +180,7 @@ sudo mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-availab
 sudo systemctl restart apache2
 
 # Copy our logo file into the web root so we can use it
-sudo mkir /var/www/html/images/
+sudo mkdir /var/www/html/images/
 sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
 
 # Now we can start the VNC server
