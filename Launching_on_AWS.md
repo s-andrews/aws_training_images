@@ -3,6 +3,8 @@ Launching an AWS EC2 instance
 
 If you want to run one of our images on Amazon AWS this is the set of instructions for how to do it.
 
+**Please note, running cloud services is NOT FREE and you will be charged per hour for running one of these images. Our standard training image costs aroudn £1 per day to run on Amazon EC2**
+
 1 Create an AWS account
 -----------------------
 
