@@ -50,7 +50,7 @@ sudo cp images/bioinformatics_logo_225x80.png /usr/local/share/jupyterhub/static
 # Start the actual server. We do this by creating a systemd 
 # unit for it and then starting that.
 
-sudo sh -e '
+sudo sh -c '
 echo "#!/bin/bash
 export PATH=$PATH:/usr/local/bin/
 jupyterhub --port=80 > /var/log/jupyterhub 2>&1
@@ -58,7 +58,7 @@ jupyterhub --port=80 > /var/log/jupyterhub 2>&1
 
 sudo chmod 755 /usr/local/sbin/start_jupyterhub.sh
 
-sudo sh -e '
+sudo sh -c '
 echo "[Unit]
 Description=Starts the jupyterhub service
 After=network.target
