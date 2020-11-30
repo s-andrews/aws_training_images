@@ -21,6 +21,9 @@ sudo ln -s /opt/bowtie2/bowtie2-build /usr/local/bin/
 sudo apt -y install python3-pip
 sudo pip3 install multiqc
 
+# Install MACS2
+sudo pip3 install MACS2
+
 # Install Trim Galore
 sudo pip3 install cutadapt
 sudo wget -O /opt/trim_galore.tar.gz https://github.com/FelixKrueger/TrimGalore/archive/0.6.6.tar.gz
