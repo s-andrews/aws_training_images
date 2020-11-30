@@ -11,11 +11,12 @@ sudo ln -s /opt/FastQC/fastqc /usr/local/bin
 
 # Install bowtie2
 export TIMESTAMP=$(date +%s)
-sudo wget -O /opt/bowtie2.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.4.2/bowtie2-2.4.2-linux-x86_64.zip/download?ts=$TIMESTAMP&use_mirror=autoselect
+sudo wget -O /opt/bowtie2.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.4.2/bowtie2-2.4.2-linux-x86_64.zip/download?ts=$TIMESTAMP\&use_mirror=autoselect
 sudo unzip -d /opt/ /opt/bowtie2.zip
-sudo mv /opt/bowtie2-2.4.2 /opt/bowtie2
+sudo mv /opt/bowtie2-2.4.2-linux-x86_64 /opt/bowtie2
 sudo ln -s /opt/bowtie2/bowtie2 /usr/local/bin/
 sudo ln -s /opt/bowtie2/bowtie2-build /usr/local/bin/
+sudo rm /opt/bowtie2.zip
 
 # Install MultiQC
 sudo apt -y install python3-pip
@@ -52,10 +53,10 @@ sudo Rscript /opt/SeqMonk/uk/ac/babraham/SeqMonk/load_required_modules.r
 # Install course data
 sudo wget -O ~student/worm_data.tar.gz http://www.bioinformatics.babraham.ac.uk/training/ChIP-Seq_Analysis/Worm_ChIP_Mapping.tar.gz
 sudo tar -C ~student/ -xf ~student/worm_data.tar.gz
-sudo chown -R student:student ~student/Worm_data
+sudo chown -R student:student ~student/Worm_ChIP_Mapping
 sudo rm -f ~student/worm_data.tar.gz
 
 sudo wget -O ~student/desktop_data.zip http://www.bioinformatics.babraham.ac.uk/training/ChIP-Seq_Analysis/Desktop_ChIP_Data.zip
 sudo unzip -d ~student/ ~student/desktop_data.zip
-sudo chown -R student:student ~student/desktop_data
+sudo chown -R student:student ~student/Desktop_ChIP_Data
 sudo rm -f ~student/desktop_data.zip
