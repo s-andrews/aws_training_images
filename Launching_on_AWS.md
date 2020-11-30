@@ -134,6 +134,21 @@ cd aws_training_images
 nohup ./rnaseq_ubuntu_20.04.sh > ~/build.log &
 ```
 
+ChIP-Seq
+-------
+
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./chip_ubuntu_20.04.sh > ~/build.log &
+```
+
+
 R Courses
 ---------
 The same configuration is used for the Introduction to R, Advanced R and GGplot courses.  A separate configuration is used for the Shiny course.
