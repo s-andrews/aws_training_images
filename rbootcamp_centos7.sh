@@ -11,6 +11,10 @@
 ./rstudio_server_centos7.sh
 
 # Install some additional needed packages
+
+# Needed for devtools
+sudo yum -y install libgit2-devel
+
 sudo /usr/local/bin/Rscript -e "install.packages('devtools', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('roxygen2', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('testthat', repos='https://cloud.r-project.org')"
