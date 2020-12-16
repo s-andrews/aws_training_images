@@ -165,6 +165,23 @@ cd aws_training_images
 nohup ./rbootcamp_centos7.sh > ~/build.log &
 ```
 
+10X Courses
+---------
+This image can be used for the final Seurat exercise for the 10X course
+
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+sudo yum -y install git
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./r10x_centos7.sh > ~/build.log &
+```
+
+
 Introduction to Unix
 ---------------------
 * **Server Type**: t2.medium
