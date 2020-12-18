@@ -123,6 +123,7 @@ Listed below are the settings you need to use for your "User data" when building
 RNA-Seq
 -------
 
+* **Base Image**: Ubuntu 20.04 LTS - Focal
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -137,6 +138,7 @@ nohup ./rnaseq_ubuntu_20.04.sh > ~/build.log &
 ChIP-Seq
 -------
 
+* **Base Image**: Ubuntu 20.04 LTS - Focal
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -153,6 +155,7 @@ R Courses
 ---------
 The same configuration is used for the Introduction to R, Advanced R and GGplot courses.  A separate configuration is used for the Shiny course.
 
+* **Base Image**: CentOS 7 (x86_64) - with Updates HVM
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -169,7 +172,8 @@ nohup ./rbootcamp_centos7.sh > ~/build.log &
 ---------
 This image can be used for the final Seurat exercise for the 10X course
 
-* **Server Type**: t2.medium
+* **Base Image**: CentOS 7 (x86_64) - with Updates HVM
+* **Server Type**: t2.large
 * **Disk Size**: 20GB
 
 ### User Data
@@ -184,6 +188,8 @@ nohup ./r10x_centos7.sh > ~/build.log &
 
 Introduction to Unix
 ---------------------
+
+* **Base Image**: Ubuntu 20.04 LTS - Focal
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
