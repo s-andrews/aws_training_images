@@ -98,7 +98,13 @@ Your server is now running and the build scripts will start to set everything up
 
 Although your server will move to a "Running" state very quickly, it will take a little time to add the software which allows you to connect to the web interface so be a little patient.
 
-To connect to the server you need to copy the IP address from your EC2 dashboard and paste it into your browsers location bar.  You should then see a login page which will look something like one of those shown below.  To log in to the server use the following credentials:
+To connect to the server you need to copy the IP address from your EC2 dashboard and paste it into your browsers location bar.  You should then see a login page which will look something like one of those shown below.  
+
+![Rstudio Login](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/rstudio_login.png)
+![Guacamole Login](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/guacamole_login.png)
+
+
+To log in to the server use the following credentials:
 
 * **Username**: ```student```
 * **Password**: ```[The instance ID for your server]```
