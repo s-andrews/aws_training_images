@@ -11,7 +11,7 @@ sudo ln -s /opt/FastQC/fastqc /usr/local/bin
 
 # Install hisat2
 sudo apt -y install python
-sudo wget -O /opt/hisat2.zip https://cloud.biohpc.swmed.edu/index.php/s/4pMgDq4oAF9QCfA/download
+sudo wget -O /opt/hisat2.zip https://cloud.biohpc.swmed.edu/index.php/s/oTtGWbWjaxsQ2Ho/download
 sudo unzip -d /opt/ /opt/hisat2.zip
 sudo mv /opt/hisat2-2.2.1 /opt/hisat2
 sudo ln -s /opt/hisat2/hisat2 /usr/local/bin/
@@ -49,12 +49,12 @@ sudo apt -y install libxml2-dev libcurl4-openssl-dev
 sudo Rscript /opt/SeqMonk/uk/ac/babraham/SeqMonk/load_required_modules.r
 
 # Install course data
-sudo wget -O ~student/yeast_data.tar.gz http://www.bioinformatics.babraham.ac.uk/training/RNASeq_Course/yeast_data.tar.gz
+sudo wget --quiet -O ~student/yeast_data.tar.gz http://www.bioinformatics.babraham.ac.uk/training/RNASeq_Course/yeast_data.tar.gz
 sudo tar -C ~student/ -xf ~student/yeast_data.tar.gz
 sudo chown -R student:student ~student/Yeast_data_for_mapping
 sudo rm -f ~student/yeast_data.tar.gz
 
-sudo wget -O ~student/mouse_mapped_data.zip http://www.bioinformatics.babraham.ac.uk/training/RNASeq_Course/mouse_mapped_data.zip
+sudo wget --quiet -O ~student/mouse_mapped_data.zip http://www.bioinformatics.babraham.ac.uk/training/RNASeq_Course/mouse_mapped_data.zip
 sudo unzip -d ~student/ ~student/mouse_mapped_data.zip
 sudo chown -R student:student ~student/mouse_mapped_data
 sudo rm -f ~student/mouse_mapped_data.zip
