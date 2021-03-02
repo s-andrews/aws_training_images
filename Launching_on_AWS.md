@@ -209,11 +209,18 @@ cd aws_training_images
 nohup ./unix_intro_ubuntu_20.04.sh > ~/build.log &
 ```
 
+Scientific Figure Design
+------------------------
 
+* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
 
-
-
-
-
-
-
+### User Data
+```
+#!/bin/bash
+sudo yum -y install git
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./figdesign_ubuntu_20.04.sh > ~/build.log &
+```
