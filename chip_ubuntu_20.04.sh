@@ -6,7 +6,6 @@
 # Install programs
 ./programs/fastqc.sh
 ./programs/bowtie2.sh
-./programs/fastqc.sh
 ./programs/multiqc.sh
 ./programs/macs2.sh
 ./programs/trim_galore.sh
