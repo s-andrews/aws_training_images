@@ -11,6 +11,11 @@
 ./programs/samtools.sh
 ./programs/seqmonk.sh
 
+# Remove xarchiver since if people double clicked on a big
+# gzipped file it would hang the server.
+
+sudo apt -y remove xarchiver
+
 # Install course data
 sudo wget --quiet -O ~student/yeast_data.tar.gz http://www.bioinformatics.babraham.ac.uk/training/RNASeq_Course/yeast_data.tar.gz
 sudo tar -C ~student/ -xf ~student/yeast_data.tar.gz
