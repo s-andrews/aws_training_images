@@ -29,7 +29,7 @@ echo student:$INSTANCE | sudo chpasswd
 sudo apt update
 sudo apt -y install build-essential libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
 
-wget http://mirror.cc.columbia.edu/pub/software/apache/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
+wget https://archive.apache.org/dist/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
 
 tar -xf guacamole-server-1.2.0.tar.gz
 
