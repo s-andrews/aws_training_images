@@ -4,6 +4,7 @@
 ./guacamole_desktop_ubuntu_20.04.sh
 
 # Install programs
+./programs/r.sh
 ./programs/fastqc.sh
 ./programs/bowtie2.sh
 ./programs/multiqc.sh
