@@ -6,6 +6,6 @@ sudo unzip -d /opt/prideinspector /opt/prideinspector/pride.zip
 
 # The version number here might change which is annoying.
 sudo sh -c 'echo "#!/bin/bash
-java -jar /opt/prideinspector/pride-inspector-2.5.4.jar" > /usr/local/bin/prideinspector'
+java -jar /opt/prideinspector/pride-inspector-2.5.4/pride-inspector-2.5.4.jar" > /usr/local/bin/prideinspector'
 
 sudo chmod 755 /usr/local/bin/prideinspector
