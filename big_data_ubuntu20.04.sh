@@ -10,10 +10,6 @@
 ./programs/igv.sh
 ./programs/fcsalyzer.sh
 
-# Remove xarchiver since if people double clicked on a big
-# gzipped file it would hang the server.
-
-sudo apt -y remove xarchiver
 
 # Install course data
 sudo wget --quiet -O ~student/bigdata.tar.gz http://www.bioinformatics.babraham.ac.uk/training/bigdata/bigdata.tar.gz
