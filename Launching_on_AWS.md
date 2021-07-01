@@ -228,3 +228,21 @@ git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
 nohup ./figdesign_ubuntu_20.04.sh > ~/build.log &
 ```
+
+Introduction to Biological Big Data
+-----------------------------------
+
+* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Server Type**: t2.medium
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+sudo apt update
+sudo apt -y install git
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./big_data_ubuntu20.04.sh > ~/build.log &
+```
+
