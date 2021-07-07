@@ -33,3 +33,6 @@ sudo tar -C ~student/ -xf ~student/unix_intro_data.tar.gz
 sudo chown -R student:student ~student/FastQ_Data
 sudo chown -R student:student ~student/seqmonk_genomes
 sudo rm -f ~student/unix_intro_data.tar.gz
+
+# Install tidyverse
+sudo Rscript -e "install.packages('tidyverse', repos='http://cloud.r-project.org')"
