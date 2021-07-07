@@ -15,6 +15,12 @@
 sudo apt -y install figlet
 sudo apt -y install xcowsay
 
+# Install RStudio
+sudo apt-get install gdebi-core
+wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.4.1717-amd64.deb
+sudo gdebi rstudio-server-1.4.1717-amd64.deb
+
+
 # Install course data
 sudo wget --quiet -O ~student/bigdata.tar.gz http://www.bioinformatics.babraham.ac.uk/training/bigdata/bigdata.tar.gz
 sudo tar -C ~student/ -xf ~student/bigdata.tar.gz
