@@ -9,10 +9,21 @@
 ./programs/seqmonk.sh
 ./programs/igv.sh
 ./programs/fcsalyzer.sh
+./programs/multiqc.sh
 
+
+sudo apt -y install figlet
+sudo apt -y install xcowsay
 
 # Install course data
 sudo wget --quiet -O ~student/bigdata.tar.gz http://www.bioinformatics.babraham.ac.uk/training/bigdata/bigdata.tar.gz
 sudo tar -C ~student/ -xf ~student/bigdata.tar.gz
 sudo chown -R student:student ~student/Big_Data
 sudo rm -f ~student/bigdata.tar.gz
+
+# Install course data
+sudo wget -O ~student/unix_intro_data.tar.gz http://www.bioinformatics.babraham.ac.uk/training/Introduction%20to%20Unix/unix_intro_data.tar.gz
+sudo tar -C ~student/ -xf ~student/unix_intro_data.tar.gz
+sudo chown -R student:student ~student/FastQ_Data
+sudo chown -R student:student ~student/seqmonk_genomes
+sudo rm -f ~student/unix_intro_data.tar.gz
