@@ -21,7 +21,7 @@ sudo gdebi -n rstudio-1.4.1717-amd64.deb
 
 # Install Thonny
 sudo apt -y install thonny
-sudo pip install pysam
+sudo pip install requests
 
 
 # Install course data
