@@ -45,5 +45,6 @@ sudo unzip -d ~student/ ~student/rintro.zip
 sudo chown -R student:student ~student/R_tidyverse_intro_data
 sudo rm -f ~student/rintro.zip
 
-# Install tidyverse
+# Install tidyverse and rstatix
 sudo Rscript -e "install.packages('tidyverse', repos='http://cloud.r-project.org')"
+sudo Rscript -e "install.packages('rstatix', repos='http://cloud.r-project.org')"
