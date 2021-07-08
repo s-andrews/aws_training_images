@@ -17,8 +17,8 @@ sudo apt -y install xcowsay
 
 # Install RStudio
 sudo apt-get install gdebi-core
-wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
-sudo gdebi rstudio-1.4.1717-amd64.deb
+sudo wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
+sudo gdebi -n rstudio-1.4.1717-amd64.deb
 
 
 # Install course data
