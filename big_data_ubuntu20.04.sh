@@ -24,7 +24,6 @@ sudo apt -y install thonny
 sudo pip install requests
 sudo pip install biopython
 
-
 # Install course data
 sudo wget --quiet -O ~student/bigdata.tar.gz http://www.bioinformatics.babraham.ac.uk/training/bigdata/bigdata.tar.gz
 sudo tar -C ~student/ -xf ~student/bigdata.tar.gz
@@ -37,13 +36,6 @@ sudo tar -C ~student/ -xf ~student/unix_intro_data.tar.gz
 sudo chown -R student:student ~student/FastQ_Data
 sudo chown -R student:student ~student/seqmonk_genomes
 sudo rm -f ~student/unix_intro_data.tar.gz
-
-# Install R intro course data
-sudo yum -y install wget
-sudo wget -O ~student/rintro.zip https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R_tidyverse/R_tidyverse_intro_data.zip
-sudo unzip -d ~student/ ~student/rintro.zip
-sudo chown -R student:student ~student/R_tidyverse_intro_data
-sudo rm -f ~student/rintro.zip
 
 # Install tidyverse and rstatix
 sudo Rscript -e "install.packages('tidyverse', repos='http://cloud.r-project.org')"
