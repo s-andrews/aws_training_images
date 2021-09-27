@@ -11,7 +11,7 @@ sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.0.3
+export R_VERSION=4.1.0
 
 sudo -E yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
@@ -31,7 +31,7 @@ sudo yum -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo yum -y install https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1093-x86_64.rpm
+sudo yum -y install https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1717-x86_64.rpm
 
 # Change the logo on the login page to ours
 sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
