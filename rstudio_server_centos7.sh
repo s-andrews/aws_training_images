@@ -84,4 +84,11 @@ sudo systemctl start httpd
 sudo yum -y install libxml2-devel openssl-devel
 sudo /usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
 
+# There is a bug in R on CentOS where running Sys.timezone() causes an SELINUX AVC error
+# and takes ages to time out.  Since this is called when loading tidyverse we get a very 
+# long pause and an error (although it does eventually work).  We can work around this
+# by setting the TZ value in ~/.Renviron so that it doesn't try to detect it.
 
+sudo sh -c 'echo "
+TZ="UTC"
+" >> /home/student/.Renviron'
