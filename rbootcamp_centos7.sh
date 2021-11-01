@@ -20,8 +20,8 @@ sudo /usr/local/bin/Rscript -e "install.packages('roxygen2', repos='https://clou
 sudo /usr/local/bin/Rscript -e "install.packages('testthat', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('knitr', repos='https://cloud.r-project.org')"
 
-# Install intro course data
-sudo yum -y install wget
+# Install intro course data - we need to add the ca-certificates package so our letsencrypt https certificate is recognised correctly
+sudo yum -y install wget ca-certificates
 sudo wget -O ~student/rintro.zip https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R_tidyverse/R_tidyverse_intro_data.zip
 sudo unzip -d ~student/ ~student/rintro.zip
 sudo chown -R student:student ~student/R_tidyverse_intro_data
