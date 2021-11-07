@@ -18,3 +18,9 @@ sudo chown -R student:student ~student/FastQ_Data
 sudo chown -R student:student ~student/seqmonk_genomes
 sudo rm -f ~student/unix_intro_data.tar.gz
 
+# Add the data for the QC course too as we often do them together
+sudo wget -O ~student/Sequencing_Quality_Control_Data.zip http://www.bioinformatics.babraham.ac.uk/training/Sequence_QC_Course/Sequencing_Quality_Control_Data.zip
+sudo unzip -d ~student/ ~student/Sequencing_Quality_Control_Data.zip
+sudo chown -R student:student ~student/Sequencing_Quality_Control_Data
+sudo rm -f ~student/Sequencing_Quality_Control_Data.zip
+
