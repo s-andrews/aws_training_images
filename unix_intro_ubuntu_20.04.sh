@@ -24,3 +24,5 @@ sudo unzip -d ~student/ ~student/Sequencing_Quality_Control_Data.zip
 sudo chown -R student:student ~student/Sequencing_Quality_Control_Data
 sudo rm -f ~student/Sequencing_Quality_Control_Data.zip
 
+# We need a PDF viewer and there isn't one in the base image
+sudo apt -y install evince
