@@ -84,6 +84,9 @@ sudo systemctl start httpd
 sudo yum -y install libxml2-devel openssl-devel
 sudo /usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
 
+# For downloads to work we need to install additional certificates
+sudo yum -y install wget ca-certificates
+
 # There is a bug in R on CentOS where running Sys.timezone() causes an SELINUX AVC error
 # and takes ages to time out.  Since this is called when loading tidyverse we get a very 
 # long pause and an error (although it does eventually work).  We can work around this
