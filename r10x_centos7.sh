@@ -14,13 +14,14 @@
 sudo yum -y install libpng-devel
 
 sudo /usr/local/bin/Rscript -e "install.packages('Seurat', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('hdf5r', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('sleepwalk', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('SCINA', repos='https://cloud.r-project.org')"
 
 
 # Install intro course data
 sudo yum -y install wget
-sudo wget -O ~student/10x.zip http://www.bioinformatics.babraham.ac.uk/training/10XRNASeq/10XCourse%20Data.zip
+sudo wget -O ~student/10x.zip https://www.bioinformatics.babraham.ac.uk/training/10XRNASeq/10XCourse%20Data.zip
 sudo unzip -d ~student/ ~student/10x.zip
 sudo chown -R student:student ~student/10XCourse\ Data
 sudo rm -f ~student/10x.zip
