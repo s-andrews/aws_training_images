@@ -13,6 +13,7 @@
 
 sudo apt -y install figlet
 sudo apt -y install xcowsay
+sudo apt -y install vlc
 
 # Install RStudio
 sudo apt -y install gdebi-core
