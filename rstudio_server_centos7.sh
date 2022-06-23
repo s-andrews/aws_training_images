@@ -34,6 +34,8 @@ sudo yum -y install devtoolset-7-gcc*
 sudo sh -c 'echo "
 #!/bin/bash
 source /opt/rh/devtoolset-7/enable
+export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
+export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 " > /etc/profile.d/devtoolset7.sh'
 
 # Install the RStudio Server RPM from the Rstudio site
