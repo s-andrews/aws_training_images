@@ -25,6 +25,17 @@ sudo -E ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/
 # To compile R packages we need the development tools
 sudo yum -y groupinstall "Development Tools"
 
+# We also need a newer development toolset since some packages now won't compile with 
+# older versions of gcc
+
+sudo yum -y install centos-release-scl 
+sudo yum -y install devtoolset-7-gcc* 
+
+sudo sh -c 'echo "
+#!/bin/bash
+source /opt/rh/devtoolset-7/enable
+" > /etc/profile.d/devtoolset7.sh'
+
 # Install the RStudio Server RPM from the Rstudio site
 # It would be good if there was a shortcut to the latest
 # version, otherwise we'll have to keep updating this, or
