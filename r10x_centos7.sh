@@ -21,9 +21,12 @@ sudo yum -y install geos-devel
 # The version of the hdf5 library on centos7 means we can't install anything newer than 1.0.0 in this package
 sudo /usr/local/bin/Rscript -e "install.packages(\"https://cloud.r-project.org/src/contrib/Archive/hdf5r/hdf5r_1.0.0.tar.gz\", repos=NULL, type=\"source\")"
 
-sudo /usr/local/bin/Rscript -e "install.packages(\"Seurat\", repos=\"https://cloud.r-project.org\")"
-sudo /usr/local/bin/Rscript -e "install.packages(\"sleepwalk\", repos=\"https://cloud.r-project.org\")"
-sudo /usr/local/bin/Rscript -e "install.packages(\"SCINA\", repos=\"https://cloud.r-project.org\")"
+# We shouldn't need to do this but seurat seems to fail when shiny isn't already installed
+# so we'll manually add that first.
+sudo /usr/local/bin/Rscript -e "install.packages('shiny', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('Seurat', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('sleepwalk', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('SCINA', repos='https://cloud.r-project.org')"
 
 
 # Install intro course data
