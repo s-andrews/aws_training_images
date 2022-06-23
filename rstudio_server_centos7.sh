@@ -11,7 +11,7 @@ sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.1.1
+export R_VERSION=4.2.0
 
 sudo -E yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
