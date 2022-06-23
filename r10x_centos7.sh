@@ -14,6 +14,8 @@
 sudo yum -y install libpng-devel
 # Needed for hdf5r
 sudo yum -y install hdf5-devel
+# Needed for seurat
+sudo yum -y install geos-devel
 
 sudo /usr/local/bin/Rscript -e "install.packages('Seurat', repos='https://cloud.r-project.org')"
 
