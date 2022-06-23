@@ -42,7 +42,7 @@ source /opt/rh/devtoolset-7/enable
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo yum -y install https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1717-x86_64.rpm
+sudo yum -y install https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-2022.02.3-492-x86_64.rpm
 
 # Change the logo on the login page to ours
 sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
