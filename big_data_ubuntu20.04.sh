@@ -17,7 +17,7 @@ sudo apt -y install vlc
 
 # Install RStudio
 sudo apt -y install gdebi-core
-sudo wget https://download1.rstudio.org/desktop/jammy/amd64/rstudio-2022.07.2-576-amd64.deb
+sudo wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2022.07.2-576-amd64.deb
 sudo gdebi -n rstudio-2022.07.2-576-amd64.deb
 
 # Install Thonny
