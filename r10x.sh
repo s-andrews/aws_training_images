@@ -6,20 +6,20 @@
 
 
 # Start from the rstudio image
-./rstudio_server_centos7.sh
+./rstudio_server_base.sh
 
 # Install the packages we need
 
 # Needed for the png package
-sudo yum -y install libpng-devel
+sudo dnf -y install libpng-devel
 # Needed for hdf5r
-sudo yum -y install hdf5-devel
+sudo dnf -y install hdf5-devel
 # Needed for seurat
-sudo yum -y install geos-devel
+sudo dnf -y install geos-devel
 
 
 # The version of the hdf5 library on centos7 means we can't install anything newer than 1.0.0 in this package
-sudo /usr/local/bin/Rscript -e "install.packages(\"https://cloud.r-project.org/src/contrib/Archive/hdf5r/hdf5r_1.0.0.tar.gz\", repos=NULL, type=\"source\")"
+sudo /usr/local/bin/Rscript -e "install.packages('hdf5r', repos='https://cloud.r-project.org')"
 
 # We shouldn't need to do this but seurat seems to fail when shiny isn't already installed
 # so we'll manually add that first.
