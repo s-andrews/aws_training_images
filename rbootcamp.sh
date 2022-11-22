@@ -8,20 +8,19 @@
 
 
 # Start from the rstudio image
-./rstudio_server_centos7.sh
+./rstudio_server_base.sh
 
 # Install some additional needed packages
 
 # Needed for devtools
-sudo yum -y install libgit2-devel
+sudo dnf -y install libgit2-devel
 
 sudo /usr/local/bin/Rscript -e "install.packages('devtools', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('roxygen2', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('testthat', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('knitr', repos='https://cloud.r-project.org')"
 
-# Install intro course data - we need to add the ca-certificates package so our letsencrypt https certificate is recognised correctly
-sudo yum -y install wget ca-certificates
+# Install intro course data
 sudo wget -O ~student/rintro.zip https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R_tidyverse/R_tidyverse_intro_data.zip
 sudo unzip -d ~student/ ~student/rintro.zip
 sudo chown -R student:student ~student/R_tidyverse_intro_data
