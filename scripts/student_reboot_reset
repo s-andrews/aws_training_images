@@ -47,5 +47,3 @@ systemctl restart tomcat9 guacd
 systemctl restart tomcat9 guacd
 sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
 
-
-
