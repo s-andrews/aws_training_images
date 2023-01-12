@@ -30,7 +30,7 @@ sudo /usr/local/bin/set_student_password
 # We need to add this script to /etc/cron.d using the @reboot time so it
 # gets run on every boot
 sudo sh -c 'echo "
-@reboot /usr/local/bin/set_student_password
+@reboot root /usr/local/bin/set_student_password
 " > /etc/cron.d/reset_password'
 
 
