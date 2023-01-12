@@ -16,26 +16,10 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 
 # We use the AWS link-local HTTP API to retrieve the current instance ID.  This
 # will only work on the actual AWS image.  This bit will obviously fail if you're
-# not on AWS.  We want this to happen on launch but also on every reboot.
+# not on AWS
 
-### TEMPORARY FIX - Setting the password turns out to me more complex than I thought - I need to put this back for now until I fix things #
 export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
-
-sudo sh -c 'echo "
-export INSTANCE=\`curl -s http://169.254.169.254/latest/meta-data/instance-id\`
-echo student:\$INSTANCE | sudo chpasswd
-" > /usr/local/bin/set_student_password'
-
-sudo chmod 755 /usr/local/bin/set_student_password
-
-sudo /usr/local/bin/set_student_password
-
-# We need to add this script to /etc/cron.d using the @reboot time so it
-# gets run on every boot
-sudo sh -c 'echo "
-@reboot root /usr/local/bin/set_student_password
-" > /etc/cron.d/reset_password'
-
+echo student:$INSTANCE | sudo chpasswd
 
 # We now have the student account available to us.  We'll do some basic building in 
 # ubuntu but then switch over when we get to VNC stuff.
@@ -84,7 +68,6 @@ sudo mkdir /etc/guacamole/
 sudo sh -c 'echo "# Hostname and port of guacamole proxy
 guacd-hostname: localhost
 guacd-port:     4822
-
 # Auth provider class (authenticates user/pass combination, needed if using the provided login screen)
 auth-provider: net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvider
 basic-user-mapping: /etc/guacamole/user-mapping.xml
@@ -100,13 +83,11 @@ export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
 # Note that we need the -E on sudo so the PWMD variable
 # is passed through to root's environment.
 sudo -E sh -c 'echo "<user-mapping>
-
     <!-- Per-user authentication and config information -->
     <authorize
          username=\"student\"
          password=\"$PWMD\"
          encoding=\"md5\">
-
        <connection name=\"default\">
          <protocol>vnc</protocol>
          <param name=\"hostname\">localhost</param>
@@ -129,10 +110,8 @@ sudo mkdir ~student/.vnc
 
 sudo sh -c 'echo "
 #!/bin/sh
-
 xrdb /home/student/.Xresources
 dbus-launch startxfce4 &
-
 " > ~student/.vnc/xstartup'
 
 # Set the VNC password to the instance ID
@@ -165,23 +144,19 @@ sudo a2enmod proxy proxy_http headers proxy_wstunnel
 sudo sh -c 'echo "<VirtualHost *:80>
       ErrorLog ${APACHE_LOG_DIR}/guacamole_error.log
       CustomLog ${APACHE_LOG_DIR}/guacamole_access.log combined
-
       <Location />
           Require all granted
           ProxyPass http://localhost:8080/guacamole/ flushpackets=on
           ProxyPassReverse http://localhost:8080/guacamole/
       </Location>
-
       <Location /images/guac-tricolor.png>
            ProxyPass !
       </Location>
-
      <Location /websocket-tunnel>
          Require all granted
          ProxyPass ws://localhost:8080/guacamole/websocket-tunnel
          ProxyPassReverse ws://localhost:8080/guacamole/websocket-tunnel
      </Location>
-
      Header always unset X-Frame-Options
 </VirtualHost>" > /etc/apache2/sites-available/guacamole.conf
 '
@@ -201,5 +176,3 @@ sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
 
 # Now we can start the VNC server
 sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
-
-
