@@ -18,6 +18,9 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 # will only work on the actual AWS image.  This bit will obviously fail if you're
 # not on AWS.  We want this to happen on launch but also on every reboot.
 
+### TEMPORARY FIX - Setting the password turns out to me more complex than I thought - I need to put this back for now until I fix things #
+export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+
 sudo sh -c 'echo "
 export INSTANCE=\`curl -s http://169.254.169.254/latest/meta-data/instance-id\`
 echo student:\$INSTANCE | sudo chpasswd
