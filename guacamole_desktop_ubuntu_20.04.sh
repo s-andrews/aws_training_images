@@ -9,19 +9,7 @@
 
 sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 
-# Set their password since we don't want a hardcoded password.  To give some
-# randomness we'll use the instance ID of the server as the initial password
-# so the user can see that in their EC2 console.  The user should still change
-# this once they've logged in for the first time.
-
-# We use the AWS link-local HTTP API to retrieve the current instance ID.  This
-# will only work on the actual AWS image.  This bit will obviously fail if you're
-# not on AWS
-
-export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
-echo student:$INSTANCE | sudo chpasswd
-
-# We now have the student account available to us.  We'll do some basic building in 
+# We now have the student account available to us.  We'll do some basic building in
 # ubuntu but then switch over when we get to VNC stuff.
 
 # Build guacamole from source since there isn't an ubuntu
@@ -73,30 +61,6 @@ auth-provider: net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvid
 basic-user-mapping: /etc/guacamole/user-mapping.xml
 " > /etc/guacamole/guacamole.properties'
 
-# Here we need to provide the user login details.  We'll need to make an
-# md5 hash from the password we want to use.  I'm not sure yet how this 
-# relates to the username we're running under.  We might need to make a 
-# student account first and do the rest of this in there?
-
-export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
-
-# Note that we need the -E on sudo so the PWMD variable
-# is passed through to root's environment.
-sudo -E sh -c 'echo "<user-mapping>
-    <!-- Per-user authentication and config information -->
-    <authorize
-         username=\"student\"
-         password=\"$PWMD\"
-         encoding=\"md5\">
-       <connection name=\"default\">
-         <protocol>vnc</protocol>
-         <param name=\"hostname\">localhost</param>
-         <param name=\"port\">5901</param>
-         <param name=\"password\">$INSTANCE</param>
-       </connection>
-    </authorize>
-</user-mapping>
-" > /etc/guacamole/user-mapping.xml'
 
 # Now set up VNC
 # The additional env variable should stop apt from prompting to set a
@@ -114,18 +78,6 @@ xrdb /home/student/.Xresources
 dbus-launch startxfce4 &
 " > ~student/.vnc/xstartup'
 
-# Set the VNC password to the instance ID
-# The redirection we do here needs BASH rather than just SH
-sudo -E bash -c "vncpasswd -f <<< $INSTANCE > ~student/.vnc/passwd"
-
-# We need to make the passwd file only readable by student otherwise
-# vnc won't accept it and will prompt us to change it when we start
-# the server.
-sudo chmod 600 ~student/.vnc/passwd
-
-# We need to change the newly created vnc files to be owned by student
-# (they're owned by root at the moment)
-sudo chown -R student:student ~student/.vnc
 
 # Reset the XFCE background
 sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
@@ -174,5 +126,15 @@ sudo systemctl restart apache2
 sudo mkdir /var/www/html/images/
 sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
 
-# Now we can start the VNC server
-sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
+# Put the reboot script into /usr/local/bin
+sudo cp scripts/student_reboot_reset /usr/local/bin/
+
+# Add the launching of the script to the reboot cron
+sudo sh -c 'echo "
+@reboot root /usr/local/bin/student_reboot_reset
+" > /etc/cron.d/reset_password'
+
+
+# Run the script to set the password and start the vnc server
+sudo /usr/local/bin/student_reboot_reset
+
