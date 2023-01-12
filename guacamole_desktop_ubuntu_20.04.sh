@@ -16,10 +16,23 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 
 # We use the AWS link-local HTTP API to retrieve the current instance ID.  This
 # will only work on the actual AWS image.  This bit will obviously fail if you're
-# not on AWS
+# not on AWS.  We want this to happen on launch but also on every reboot.
 
-export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
-echo student:$INSTANCE | sudo chpasswd
+sudo sh -c 'echo "
+export INSTANCE=\`curl -s http://169.254.169.254/latest/meta-data/instance-id\`
+echo student:\$INSTANCE | sudo chpasswd
+" > /usr/local/bin/set_student_password'
+
+sudo chmod 755 /usr/local/bin/set_student_password
+
+sudo /usr/local/bin/set_student_password
+
+# We need to add this script to /etc/cron.d using the @reboot time so it
+# gets run on every boot
+sudo sh -c 'echo "
+@reboot root /usr/local/bin/set_student_password
+" > /etc/cron.d/reset_password'
+
 
 # We now have the student account available to us.  We'll do some basic building in 
 # ubuntu but then switch over when we get to VNC stuff.
