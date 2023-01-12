@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# This script is responsible for setting up the password on the
+# student account and applying this to both the system password
+# guacamole and VNC.  The script should run after every reboot
+# or AMI initialisation so that we can clone the same AMI over
+# multiple servers and have it just run.
+
+# Capture the current instance id
+export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+
+# Set the system password
+echo student:$INSTANCE | sudo chpasswd
+
+# Get an MD5 hashed version of the password
+export PWMD=`echo -n $INSTANCE | openssl md5 | sed 's/^.* //'`
+
+# Set up the guacamole user file
+
+echo "<user-mapping>
+    <!-- Per-user authentication and config information -->
+    <authorize
+         username=\"student\"
+         password=\"$PWMD\"
+         encoding=\"md5\">
+       <connection name=\"default\">
+         <protocol>vnc</protocol>
+         <param name=\"hostname\">localhost</param>
+         <param name=\"port\">5901</param>
+         <param name=\"password\">$INSTANCE</param>
+       </connection>
+    </authorize>
+</user-mapping>
+" > /etc/guacamole/user-mapping.xml
+
+# Set the vnc password
+vncpasswd -f <<< $INSTANCE > ~student/.vnc/passwd
+
+# Set the ownership and permissions on the vnc password file
+chown -R student:student ~student/.vnc
+chmod 600 ~student/.vnc/passwd
+
+# Restart guacamole
+systemctl restart tomcat9 guacd
+
+# Start VNC
+systemctl restart tomcat9 guacd
+sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
+
+
+
