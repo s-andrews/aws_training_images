@@ -44,7 +44,7 @@ sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
 cd ..
 
 # Donwload and install the guacamole web app.
-wget https://downloads.apache.org/guacamole/1.2.0/binary/guacamole-1.2.0.war
+wget https://archive.apache.org/dist/guacamole/1.2.0/binary/guacamole-1.2.0.war
 
 sudo mv guacamole-1.2.0.war /var/lib/tomcat9/webapps/guacamole.war
 
