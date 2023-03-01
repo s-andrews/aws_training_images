@@ -57,6 +57,14 @@ sudo useradd -m -d /home/student -s /bin/bash student
 sudo dnf -y install curl
 sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd --stdin student'
 
+# Put the reboot script into /usr/local/bin
+sudo cp scripts/student_password_reset /usr/local/bin/
+
+# Add the launching of the script to the reboot cron
+sudo sh -c 'echo "
+@reboot root /usr/local/bin/student_password_reset
+" > /etc/cron.d/reset_password'
+
 # We need to configure apache to proxy the RStudio Server on port 8787 onto the
 # main web server on port 80.  We can't set up SSL since we don't have a specific 
 # domain name, and you can't use LetsEncrypt on the AWS IP range for obvious reasons.
