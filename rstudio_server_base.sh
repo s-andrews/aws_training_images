@@ -79,6 +79,21 @@ sudo rm -f /etc/httpd/conf.d/welcome.conf
 sudo setsebool -P httpd_can_network_connect on
 sudo setenforce permissive
 
+# We also write this to the config so it survives a reboot
+sudo sh -c 'echo "
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=permissive
+# SELINUXTYPE= can take one of these three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+" > /etc/selinux/config'
+
 # Write the config file we need 
 
 sudo sh -c 'echo "
