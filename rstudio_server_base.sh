@@ -109,7 +109,7 @@ sudo systemctl start httpd
 
 # We should install some basic R packages which everything will need. This also means
 # installing some OS packages which are needed to build them.
-sudo dnf -y install libxml2-devel openssl-devel fontconfig-devel
+sudo dnf -y install libxml2-devel openssl-devel fontconfig-devel harfbuzz-devel fribidi-devel
 sudo /usr/local/bin/Rscript -e "install.packages('tidyverse', repos='https://cloud.r-project.org')"
 
 # For downloads to work we need to install additional certificates
