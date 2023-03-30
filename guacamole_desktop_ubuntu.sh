@@ -66,7 +66,7 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # The additional env variable should stop apt from prompting to set a
 # display manager and will hopefully just pick a default (I don't really
 # care what it picks)
-sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies firefox tigervnc-standalone-server
+sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server
 
 sudo systemctl restart tomcat9 guacd
 
