@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start from the guacamole desktop
-./guacamole_desktop_ubuntu_20.04.sh
+./guacamole_desktop_ubuntu.sh
 
 # Install evince to view PDFs
 sudo apt -y install evince
