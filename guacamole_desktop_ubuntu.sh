@@ -17,11 +17,11 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 sudo apt update
 sudo apt -y install build-essential cmake libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
 
-wget https://archive.apache.org/dist/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
+wget https://archive.apache.org/dist/guacamole/1.5.0/source/guacamole-server-1.5.0.tar.gz
 
-tar -xf guacamole-server-1.2.0.tar.gz
+tar -xf guacamole-server-1.5.0.tar.gz
 
-cd guacamole-server-1.2.0/
+cd guacamole-server-1.5.0/
 
 ./configure --with-init-dir=/etc/init.d
 
@@ -44,9 +44,9 @@ sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
 cd ..
 
 # Donwload and install the guacamole web app.
-wget https://archive.apache.org/dist/guacamole/1.2.0/binary/guacamole-1.2.0.war
+wget https://archive.apache.org/dist/guacamole/1.5.0/binary/guacamole-1.5.0.war
 
-sudo mv guacamole-1.2.0.war /var/lib/tomcat9/webapps/guacamole.war
+sudo mv guacamole-1.5.0.war /var/lib/tomcat9/webapps/guacamole.war
 
 sudo systemctl restart tomcat9 guacd
 
