@@ -77,6 +77,7 @@ sudo sh -c 'echo "
 startxfce4
 " > ~student/.vnc/xstartup'
 
+sudo chmod 755 ~student/.vnc/xstartup
 
 # Reset the XFCE background
 sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
