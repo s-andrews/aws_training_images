@@ -72,9 +72,14 @@ sudo systemctl restart tomcat9 guacd
 
 sudo mkdir ~student/.vnc
 
-sudo sh -c 'echo "
-#!/bin/sh
-startxfce4
+sudo sh -c 'echo "#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+/usr/bin/startxfce4
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+x-window-manager &
+xset s 0 0
 " > ~student/.vnc/xstartup'
 
 sudo chmod 755 ~student/.vnc/xstartup
