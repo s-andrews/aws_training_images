@@ -134,6 +134,9 @@ sudo sh -c 'echo "
 @reboot root /usr/local/bin/student_reboot_reset
 " > /etc/cron.d/reset_password'
 
+# Install firefox
+programs/firefox.sh
+
 
 # Run the script to set the password and start the vnc server
 sudo /usr/local/bin/student_reboot_reset
