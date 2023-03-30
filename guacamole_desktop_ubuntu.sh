@@ -101,7 +101,7 @@ sudo sh -c 'echo "<VirtualHost *:80>
           ProxyPass http://localhost:8080/guacamole/ flushpackets=on
           ProxyPassReverse http://localhost:8080/guacamole/
       </Location>
-      <Location /images/guac-tricolor.png>
+      <Location /images/guac-tricolor.svg>
            ProxyPass !
       </Location>
      <Location /websocket-tunnel>
@@ -124,7 +124,7 @@ sudo systemctl restart apache2
 
 # Copy our logo file into the web root so we can use it
 sudo mkdir /var/www/html/images/
-sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
+sudo cp images/guacamole_logo.svg /var/www/html/images/guac-tricolor.svg
 
 # Put the reboot script into /usr/local/bin
 sudo cp scripts/student_reboot_reset /usr/local/bin/
