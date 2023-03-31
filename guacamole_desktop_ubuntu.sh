@@ -17,11 +17,11 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 sudo apt update
 sudo apt -y install build-essential cmake libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
 
-wget https://archive.apache.org/dist/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
+wget https://archive.apache.org/dist/guacamole/1.5.0/source/guacamole-server-1.5.0.tar.gz
 
-tar -xf guacamole-server-1.2.0.tar.gz
+tar -xf guacamole-server-1.5.0.tar.gz
 
-cd guacamole-server-1.2.0/
+cd guacamole-server-1.5.0/
 
 ./configure --with-init-dir=/etc/init.d
 
@@ -44,9 +44,9 @@ sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
 cd ..
 
 # Donwload and install the guacamole web app.
-wget https://archive.apache.org/dist/guacamole/1.2.0/binary/guacamole-1.2.0.war
+wget https://archive.apache.org/dist/guacamole/1.5.0/binary/guacamole-1.5.0.war
 
-sudo mv guacamole-1.2.0.war /var/lib/tomcat9/webapps/guacamole.war
+sudo mv guacamole-1.5.0.war /var/lib/tomcat9/webapps/guacamole.war
 
 sudo systemctl restart tomcat9 guacd
 
@@ -66,21 +66,44 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # The additional env variable should stop apt from prompting to set a
 # display manager and will hopefully just pick a default (I don't really
 # care what it picks)
-sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies firefox tigervnc-standalone-server
+sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server
 
 sudo systemctl restart tomcat9 guacd
 
 sudo mkdir ~student/.vnc
 
-sudo sh -c 'echo "
-#!/bin/sh
-xrdb /home/student/.Xresources
-dbus-launch startxfce4 &
+sudo sh -c 'echo "#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+export BROWSER=firefox
+/usr/bin/startxfce4
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
 " > ~student/.vnc/xstartup'
+
+sudo chmod 755 ~student/.vnc/xstartup
+
+# We need to disable the screensaver with an xfce4 autostart script
+sudo mkdir -p /home/student/.config/autostart
+
+sudo sh -c 'echo "[Desktop Entry]
+Version=1.0
+Name=Script
+Type=Application
+Exec=/home/student/.config/autostart/xset.sh
+" > ~student/.config/autostart/xset.desktop'
+
+sudo sh -c 'echo "#!/bin/sh
+sleep 10
+xset s 0 0
+" > ~student/.config/autostart/xset.sh'
+
+chown -R student:student ~student/.config
+chmod 755 ~student/.config/autostart/*
 
 
 # Reset the XFCE background
-sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-stripes.png
+sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
@@ -101,7 +124,7 @@ sudo sh -c 'echo "<VirtualHost *:80>
           ProxyPass http://localhost:8080/guacamole/ flushpackets=on
           ProxyPassReverse http://localhost:8080/guacamole/
       </Location>
-      <Location /images/guac-tricolor.png>
+      <Location /images/guac-tricolor.svg>
            ProxyPass !
       </Location>
      <Location /websocket-tunnel>
@@ -124,7 +147,7 @@ sudo systemctl restart apache2
 
 # Copy our logo file into the web root so we can use it
 sudo mkdir /var/www/html/images/
-sudo cp images/guacamole_logo.png /var/www/html/images/guac-tricolor.png
+sudo cp images/guacamole_logo.svg /var/www/html/images/guac-tricolor.svg
 
 # Put the reboot script into /usr/local/bin
 sudo cp scripts/student_reboot_reset /usr/local/bin/
@@ -133,6 +156,9 @@ sudo cp scripts/student_reboot_reset /usr/local/bin/
 sudo sh -c 'echo "
 @reboot root /usr/local/bin/student_reboot_reset
 " > /etc/cron.d/reset_password'
+
+# Install firefox
+programs/firefox.sh
 
 
 # Run the script to set the password and start the vnc server
