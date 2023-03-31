@@ -160,6 +160,9 @@ sudo sh -c 'echo "
 # Install firefox
 programs/firefox.sh
 
+# Delete a policy file to avoid getting a daft popup about colour profiles (See issue #16)
+sudo rm -f /usr/share/polkit-1/actions/org.freedesktop.color.policy
+
 
 # Run the script to set the password and start the vnc server
 sudo /usr/local/bin/student_reboot_reset
