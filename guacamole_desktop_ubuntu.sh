@@ -75,6 +75,7 @@ sudo mkdir ~student/.vnc
 sudo sh -c 'echo "#!/bin/sh
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
+export BROWSER=firefox
 /usr/bin/startxfce4
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
 [ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
