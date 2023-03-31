@@ -78,11 +78,28 @@ unset DBUS_SESSION_BUS_ADDRESS
 /usr/bin/startxfce4
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
 [ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
-x-window-manager &
-xset s 0 0
 " > ~student/.vnc/xstartup'
 
 sudo chmod 755 ~student/.vnc/xstartup
+
+# We need to disable the screensaver with an xfce4 autostart script
+sudo mkdir -p /home/student/.config/autostart
+
+sudo sh -c 'echo "[Desktop Entry]
+Version=1.0
+Name=Script
+Type=Application
+Exec=/home/student/.config/autostart/xset.sh
+" > ~student/.config/autostart/xset.desktop'
+
+sudo sh -c 'echo "#!/bin/sh
+sleep 10
+xset s 0 0
+" > ~student/.config/autostart/xset.sh'
+
+chown -R student:student ~student/.config
+chmod 755 ~student/.config/autostart/*
+
 
 # Reset the XFCE background
 sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
