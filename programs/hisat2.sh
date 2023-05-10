@@ -7,3 +7,7 @@ sudo ln -s /opt/hisat2/hisat2 /usr/local/bin/
 sudo ln -s /opt/hisat2/hisat2-build /usr/local/bin/
 sudo ln -s /opt/hisat2/extract_splice_sites.py /usr/local/bin/
 sudo ln -s /opt/hisat2/hisat2_extract_splice_sites.py /usr/local/bin/
+
+# hisat2-build uses python rather than python3 for some reason so we need
+# to add a link to that name so it works.
+sudo ln -s -f /usr/bin/python3 /usr/local/bin/python
