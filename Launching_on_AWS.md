@@ -31,7 +31,7 @@ Next you need to select "Launch a virtual machine" to start creating your new in
 
 
 ### Select your base image
-All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq_ubuntu_20.04.sh``` uses the Ubunto 20.04 image, and ```rstudio_server_centos7.sh``` uses the CentOS 7 base image.
+All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq.sh``` uses the Ubunto 20.04 image, and ```rstudio_server_centos7.sh``` uses the CentOS 7 base image.
 
 To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```centos``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
 
@@ -130,7 +130,7 @@ Listed below are the settings you need to use for your "User data" when building
 RNA-Seq
 -------
 
-* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -141,13 +141,13 @@ sudo apt update
 sudo apt -y install git
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
-nohup ./rnaseq_ubuntu_20.04.sh > ~/build.log &
+nohup ./rnaseq.sh > ~/build.log &
 ```
 
 ChIP-Seq
 -------
 
-* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -156,7 +156,7 @@ ChIP-Seq
 #!/bin/bash
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
-nohup ./chip_ubuntu_20.04.sh > ~/build.log &
+nohup ./chip.sh > ~/build.log &
 ```
 
 
@@ -198,7 +198,7 @@ nohup ./r10x.sh > ~/build.log &
 Introduction to Unix
 ---------------------
 
-* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -209,13 +209,13 @@ sudo apt update
 sudo apt -y install git
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
-nohup ./unix_intro_ubuntu_20.04.sh > ~/build.log &
+nohup ./unix_intro.sh > ~/build.log &
 ```
 
 Scientific Figure Design
 ------------------------
 
-* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -226,13 +226,13 @@ sudo apt update
 sudo apt -y install git
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
-nohup ./figdesign_ubuntu_20.04.sh > ~/build.log &
+nohup ./figdesign.sh > ~/build.log &
 ```
 
 Introduction to Biological Big Data
 -----------------------------------
 
-* **Base Image**: Ubuntu 20.04 LTS - Focal
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -243,6 +243,25 @@ sudo apt update
 sudo apt -y install git
 git clone https://github.com/s-andrews/aws_training_images.git
 cd aws_training_images
-nohup ./big_data_ubuntu20.04.sh > ~/build.log &
+nohup ./big_data.sh > ~/build.log &
 ```
+
+Analysing Methylation Data
+---------------------------
+
+* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Server Type**: t2.large
+* **Disk Size**: 20GB
+
+### User Data
+```
+#!/bin/bash
+sudo apt update
+sudo apt -y install git
+git clone https://github.com/s-andrews/aws_training_images.git
+cd aws_training_images
+nohup ./methylation.sh > ~/build.log &
+```
+
+
 
