@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y --no-install-recommends software-properties-common dirmngr
+sudo apt install -y --no-install-recommends software-properties-common dirmngr libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
 wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 
