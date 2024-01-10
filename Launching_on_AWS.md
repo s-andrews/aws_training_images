@@ -33,7 +33,7 @@ Next you need to select "Launch a virtual machine" to start creating your new in
 ### Select your base image
 All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq.sh``` uses the Ubunto 20.04 image, and ```rstudio_server_centos7.sh``` uses the CentOS 7 base image.
 
-To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```centos``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
+To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```almalinux``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
 
 ![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_ubuntu22.PNG)
 ![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_alma8.PNG)
