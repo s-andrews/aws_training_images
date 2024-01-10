@@ -35,8 +35,8 @@ All EC2 instances are built off a base image.  You need to select the correct ba
 
 To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```centos``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
 
-![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/base_image_selection.png)
-![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/base_image_selection_centos.png)
+![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_ubuntu22.PNG)
+![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_alma8.PNG)
 
 You will then see a list of prices for different server types for that image.  All of the base images we use do not charge for the use of the software (you should see the software costs are all zero), only for the EC2 compute power and storage.  If you see charges for software at this stage then go back and check since you've selected the wrong image.
 
@@ -164,7 +164,7 @@ R Courses
 ---------
 The same configuration is used for the Introduction to R, Advanced R and GGplot courses.  A separate configuration is used for the Shiny course.
 
-* **Base Image**: CentOS 7 (x86_64) - with Updates HVM
+* **Base Image**: AlmaLinux 8 (x86_64)
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -181,7 +181,7 @@ nohup ./rbootcamp.sh > ~/build.log &
 ---------
 This image can be used for the final Seurat exercise for the 10X course
 
-* **Base Image**: CentOS 7 (x86_64) - with Updates HVM
+* **Base Image**: AlmaLinux 8 (x86_64)
 * **Server Type**: t2.large
 * **Disk Size**: 20GB
 
