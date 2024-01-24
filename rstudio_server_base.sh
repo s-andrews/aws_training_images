@@ -14,7 +14,7 @@ sudo /usr/bin/crb enable
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.3.0
+export R_VERSION=4.3.2
 
 sudo -E dnf -y install https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
@@ -34,7 +34,7 @@ sudo dnf -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.03.1-446-x86_64.rpm
+sudo dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.0-369-x86_64.rpm
 
 # Change the logo on the login page to ours
 sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
