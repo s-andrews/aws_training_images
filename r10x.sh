@@ -25,6 +25,10 @@ sudo /usr/local/bin/Rscript -e "install.packages('shiny', repos='https://cloud.r
 sudo /usr/local/bin/Rscript -e "install.packages('Seurat', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('SCINA', repos='https://cloud.r-project.org')"
 
+# Some extras for bits of seurat
+sudo /usr/local/bin/Rscript -e "install.packages('Hmisc', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('devtools', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "devtools::install_github('immunogenomics/presto')"
 
 # Install intro course data
 sudo yum -y install wget
