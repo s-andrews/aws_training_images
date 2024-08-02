@@ -14,7 +14,7 @@ sudo /usr/bin/crb enable
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.3.2
+export R_VERSION=4.4.1
 
 sudo -E dnf -y install https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
@@ -34,7 +34,7 @@ sudo dnf -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.0-369-x86_64.rpm
+sudo dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2024.04.2-764-x86_64.rpm
 
 # Change the logo on the login page to ours
 sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
@@ -55,7 +55,7 @@ sudo useradd -m -d /home/student -s /bin/bash student
 # not on AWS
 
 sudo dnf -y install curl
-sudo sh -c 'curl -s http://169.254.169.254/latest/meta-data/instance-id | passwd --stdin student'
+sudo sh -c 'TOKEN=`curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` && curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/dynamic/instance-identity/document/ | grep instanceId | cut -c 19-37 | passwd --stdin student'
 
 # Put the reboot script into /usr/local/bin
 sudo cp scripts/student_password_reset /usr/local/bin/

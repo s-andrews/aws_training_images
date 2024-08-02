@@ -6,7 +6,7 @@
 
 
 # Start from the rstudio image
-./rstudio_server_base.sh
+#./rstudio_server_base.sh
 
 # Install the packages we need
 
@@ -23,12 +23,23 @@ sudo /usr/local/bin/Rscript -e "install.packages('hdf5r', repos='https://cloud.r
 # so we'll manually add that first.
 sudo /usr/local/bin/Rscript -e "install.packages('shiny', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('Seurat', repos='https://cloud.r-project.org')"
-sudo /usr/local/bin/Rscript -e "install.packages('SCINA', repos='https://cloud.r-project.org')"
+
 
 # Some extras for bits of seurat
 sudo /usr/local/bin/Rscript -e "install.packages('Hmisc', repos='https://cloud.r-project.org')"
-sudo /usr/local/bin/Rscript -e "install.packages('devtools', repos='https://cloud.r-project.org')"
-sudo /usr/local/bin/Rscript -e "devtools::install_github('immunogenomics/presto')"
+sudo /usr/local/bin/Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "remotes::install_github('immunogenomics/presto')"
+
+# We want loupeR
+sudo /usr/local/bin/Rscript -e "remotes::install_github('10xGenomics/loupeR')"
+
+# We also need to run setup, but we can't do this non-interactively, annoyingly so we'll need to do that manually later
+#sudo /usr/local/bin/Rscript -e "loupeR::setup()')"
+
+
+# We want Azimuth
+sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/seurat-data', ref='seurat5')"
+sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/azimuth', ref='seurat5')"
 
 # Install intro course data
 sudo yum -y install wget
