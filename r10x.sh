@@ -6,7 +6,7 @@
 
 
 # Start from the rstudio image
-#./rstudio_server_base.sh
+./rstudio_server_base.sh
 
 # Install the packages we need
 
@@ -39,7 +39,7 @@ sudo /usr/local/bin/Rscript -e "remotes::install_github('10xGenomics/loupeR')"
 
 # We want Azimuth
 sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/seurat-data', ref='seurat5')"
-sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/azimuth', ref='seurat5')"
+sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/azimuth')"
 
 # Install intro course data
 sudo yum -y install wget
