@@ -16,6 +16,10 @@ sudo dnf -y install libpng-devel
 sudo dnf -y install hdf5-devel
 # Needed for seurat
 sudo dnf -y install geos-devel
+# Needed for Azimuth
+sudo dnf -y install gsl-devel
+
+
 # Hdf5 is needed to read cellranger files
 sudo /usr/local/bin/Rscript -e "install.packages('hdf5r', repos='https://cloud.r-project.org')"
 
@@ -40,6 +44,12 @@ sudo /usr/local/bin/Rscript -e "remotes::install_github('10xGenomics/loupeR')"
 # We want Azimuth
 sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/seurat-data', ref='seurat5')"
 sudo /usr/local/bin/Rscript -e "remotes::install_github('satijalab/azimuth')"
+
+# We want to install the Azimuth data for pbmc
+sudo /usr/local/bin/Rscript -e "Azimuth::InstallData('pbmcsca')"
+
+# We want clustree
+sudo /usr/local/bin/Rscript -e "install.packages('clustree', repos='https://cloud.r-project.org')"
 
 # Install intro course data
 sudo yum -y install wget
