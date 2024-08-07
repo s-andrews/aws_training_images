@@ -15,6 +15,7 @@
 # Needed for devtools
 sudo dnf -y install libgit2-devel
 
+sudo /usr/local/bin/Rscript -e "install.packages('ggrepel', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('devtools', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('roxygen2', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('testthat', repos='https://cloud.r-project.org')"
