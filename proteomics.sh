@@ -34,7 +34,7 @@ sudo /usr/local/bin/Rscript -e "BiocManager::install('MSstatsShiny')"
 sudo yum -y install wget
 sudo wget -O ~student/proteomics.zip https://www.bioinformatics.babraham.ac.uk/training/proteomics/Proteomics_Course_Data.zip
 sudo unzip -d ~student/ ~student/proteomics.zip
-sudo chown -R student:student ~student/Proteomics_Course_data
+sudo chown -R student:student ~student/Proteomics_Course_Data
 sudo rm -f ~student/proteomics.zip
 
 
