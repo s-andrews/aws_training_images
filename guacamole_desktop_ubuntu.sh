@@ -103,7 +103,7 @@ chmod 755 ~student/.config/autostart/*
 
 
 # Reset the XFCE background
-sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
+sudo cp images/biotrain_desktop_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
