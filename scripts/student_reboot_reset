@@ -7,7 +7,21 @@
 # multiple servers and have it just run.
 
 # Capture the current instance id
-export INSTANCE=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+
+set -euo pipefail
+
+USER_NAME="student"
+IMDS="http://169.254.169.254"
+
+# Fetch IMDSv2 token
+TOKEN="$(curl -fsS --max-time 2 \
+  -X PUT "$IMDS/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")"
+
+# Fetch instance-id using token
+INSTANCE="$(curl -fsS --max-time 2 \
+  -H "X-aws-ec2-metadata-token: $TOKEN" \
+  "$IMDS/latest/meta-data/instance-id")"
 
 # Set the system password
 echo student:$INSTANCE | sudo chpasswd
@@ -41,9 +55,9 @@ chown -R student:student ~student/.vnc
 chmod 600 ~student/.vnc/passwd
 
 # Restart guacamole
-systemctl restart tomcat9 guacd
+systemctl restart tomcat10 guacd
 
 # Start VNC
-systemctl restart tomcat9 guacd
+systemctl restart tomcat10 guacd
 sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
 
