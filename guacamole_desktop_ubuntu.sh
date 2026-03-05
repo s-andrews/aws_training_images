@@ -79,7 +79,7 @@ sudo systemctl restart tomcat10 guacd
 
 sudo mkdir ~student/.vnc
 
-sudo sh -c '#!/bin/bash
+sudo sh -c 'echo "#!/bin/bash
 
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
