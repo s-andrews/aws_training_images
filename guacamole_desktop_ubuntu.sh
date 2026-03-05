@@ -114,8 +114,8 @@ sleep 10
 xset s 0 0
 " > ~student/.config/autostart/xset.sh'
 
-chown -R student:student ~student/.config
-chmod 755 ~student/.config/autostart/*
+sudo chown -R student:student ~student/.config
+sudo chmod 755 ~student/.config/autostart/*
 
 # We need to ensure that the correct run folder is present
 sudo loginctl enable-linger student
