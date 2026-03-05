@@ -124,7 +124,7 @@ sudo loginctl enable-linger student
 # is present and owned by student
 
 sudo mkdir -p ~student/.config/xfce4
-sudo chwon -R student:student ~student/.config
+sudo chown -R student:student ~student/.config
 
 # Reset the XFCE background
 sudo cp images/biotrain_desktop_background.png /usr/share/backgrounds/xfce/biotrain.png
