@@ -38,7 +38,7 @@ sudo systemctl start guacd
 #systemctl status guacd
 
 # Install the tomcat server which will host the web front end.
-sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
+sudo apt -y install tomcat10 tomcat10-admin tomcat10-common tomcat10-user
 
 # Move back into the main directory
 cd ..
@@ -46,9 +46,16 @@ cd ..
 # Donwload and install the guacamole web app.
 wget https://archive.apache.org/dist/guacamole/1.6.0/binary/guacamole-1.6.0.war
 
-sudo mv guacamole-1.6.0.war /var/lib/tomcat9/webapps/guacamole.war
+# We need to migrate the war file to tomcat 10
+wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.10/binaries/jakartaee-migration-1.0.10-bin.tar.gz
+tar -xzf jakartaee-migration-1.0.10-bin.tar.gz
 
-sudo systemctl restart tomcat9 guacd
+./jakartaee-migration-1.0.10/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
+
+# Now we can move the war file to the correct directory
+sudo mv guacamole-1.6.0_tomcat10.war /var/lib/tomcat10/webapps/guacamole.war
+
+sudo systemctl restart tomcat10 guacd
 
 # Make the configuration files for guacamole
 sudo mkdir /etc/guacamole/
@@ -68,7 +75,7 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # care what it picks)
 sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server
 
-sudo systemctl restart tomcat9 guacd
+sudo systemctl restart tomcat10 guacd
 
 sudo mkdir ~student/.vnc
 
