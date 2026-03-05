@@ -86,13 +86,13 @@ unset DBUS_SESSION_BUS_ADDRESS
 
 #export BROWSER=firefox
 
-export HOME=/home/$USER
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export HOME=/home/\$USER
+export XDG_CONFIG_HOME=\$HOME/.config
+export XDG_DATA_HOME=\$HOME/.local/share
+export XDG_RUNTIME_DIR=/run/user/\$(id -u)
 
-mkdir -p $XDG_CONFIG_HOME
-mkdir -p $XDG_DATA_HOME
+mkdir -p \$XDG_CONFIG_HOME
+mkdir -p \$XDG_DATA_HOME
 
 exec dbus-run-session -- xfce4-session
 " > ~student/.vnc/xstartup'
