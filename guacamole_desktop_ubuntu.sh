@@ -127,7 +127,7 @@ sudo mkdir -p ~student/.config/xfce4
 sudo chown -R student:student ~student/.config
 
 # Reset the XFCE background
-sudo cp images/biotrain_desktop_background.png /usr/share/backgrounds/xfce/biotrain.png
+sudo cp images/biotrain_desktop_background.svg /usr/share/backgrounds/xfce/xfce-shapes.svg
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
