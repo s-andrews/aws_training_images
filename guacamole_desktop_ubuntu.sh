@@ -73,19 +73,28 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # The additional env variable should stop apt from prompting to set a
 # display manager and will hopefully just pick a default (I don't really
 # care what it picks)
-sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server
+sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server dbus-x11
 
 sudo systemctl restart tomcat10 guacd
 
 sudo mkdir ~student/.vnc
 
-sudo sh -c 'echo "#!/bin/sh
+sudo sh -c '#!/bin/bash
+
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-export BROWSER=firefox
-/usr/bin/startxfce4
-[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
-[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+
+#export BROWSER=firefox
+
+export HOME=/home/$USER
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
+mkdir -p $XDG_CONFIG_HOME
+mkdir -p $XDG_DATA_HOME
+
+exec dbus-run-session -- xfce4-session
 " > ~student/.vnc/xstartup'
 
 sudo chmod 755 ~student/.vnc/xstartup
@@ -108,9 +117,17 @@ xset s 0 0
 chown -R student:student ~student/.config
 chmod 755 ~student/.config/autostart/*
 
+# We need to ensure that the correct run folder is present
+sudo loginctl enable-linger student
+
+# We need to ensure that the student's xfce4 config directory
+# is present and owned by student
+
+sudo mkdir -p ~student/.config/xfce4
+sudo chwon -R student:student ~student/.config
 
 # Reset the XFCE background
-sudo cp images/biotrain_desktop_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
+sudo cp images/biotrain_desktop_background.png /usr/share/backgrounds/xfce/biotrain.png
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
