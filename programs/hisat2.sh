@@ -1,5 +1,4 @@
 #!/bin/bash
-sudo apt -y install python
 sudo wget -O /opt/hisat2.zip https://cloud.biohpc.swmed.edu/index.php/s/oTtGWbWjaxsQ2Ho/download
 sudo unzip -d /opt/ /opt/hisat2.zip
 sudo mv /opt/hisat2-2.2.1 /opt/hisat2
