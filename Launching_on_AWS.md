@@ -31,11 +31,14 @@ Next you need to select "Launch a virtual machine" to start creating your new in
 
 
 ### Select your base image
-All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq.sh``` uses the Ubunto 20.04 image, and ```rstudio_server_centos7.sh``` uses the CentOS 7 base image.
+All EC2 instances are built off a base image.  You need to select the correct base image for the course you want to build.  The name of the course includes the base image name.  For example ```rnaseq.sh``` uses the Ubunto 24.04 image, and ```rstudio_server.sh``` uses the AlmaLinux 8 base image.
 
-To find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```almalinux``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
+For Ubuntu images you can use the shortcut from the launcher directly
 
-![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_ubuntu22.PNG)
+![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ubuntu2024.png)
+
+For other images, to find your base image select **AWS Marketplace** in the menu on the left then type the first word of the image name (eg ```almalinux``` or ```ubuntu``` into the search box and press return.  Find the image you want and press the select button to select it.
+
 ![Base Image](https://raw.githubusercontent.com/s-andrews/aws_training_images/main/docs/ec2_alma8.PNG)
 
 You will then see a list of prices for different server types for that image.  All of the base images we use do not charge for the use of the software (you should see the software costs are all zero), only for the EC2 compute power and storage.  If you see charges for software at this stage then go back and check since you've selected the wrong image.
@@ -147,7 +150,7 @@ nohup ./rnaseq.sh > ~/build.log &
 ChIP-Seq
 -------
 
-* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Base Image**: Ubuntu 24.04 LTS - Noble
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -198,7 +201,7 @@ nohup ./r10x.sh > ~/build.log &
 Introduction to Unix
 ---------------------
 
-* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Base Image**: Ubuntu 24.04 LTS - Noble
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -215,7 +218,7 @@ nohup ./unix_intro.sh > ~/build.log &
 Scientific Figure Design
 ------------------------
 
-* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Base Image**: Ubuntu 24.04 LTS - Noble
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -232,7 +235,7 @@ nohup ./figdesign.sh > ~/build.log &
 Introduction to Biological Big Data
 -----------------------------------
 
-* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Base Image**: Ubuntu 24.04 LTS - Noble
 * **Server Type**: t2.medium
 * **Disk Size**: 20GB
 
@@ -249,7 +252,7 @@ nohup ./big_data.sh > ~/build.log &
 Analysing Methylation Data
 ---------------------------
 
-* **Base Image**: Ubuntu 22.04 LTS - Jammy
+* **Base Image**: Ubuntu 24.04 LTS - Noble
 * **Server Type**: t2.large
 * **Disk Size**: 20GB
 
