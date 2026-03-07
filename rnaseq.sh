@@ -11,6 +11,7 @@
 ./programs/trim_galore.sh
 ./programs/samtools.sh
 ./programs/seqmonk.sh
+./programs/nextflow.sh
 
 # Remove xarchiver since if people double clicked on a big
 # gzipped file it would hang the server.
