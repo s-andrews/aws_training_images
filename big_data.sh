@@ -17,13 +17,12 @@ sudo apt -y install vlc
 
 # Install RStudio
 sudo apt -y install gdebi-core
-sudo wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.09.0-463-amd64.deb
-sudo gdebi -n rstudio-2023.09.0-463-amd64.deb
+sudo wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2026.01.1-403-amd64.deb
+sudo gdebi -n rstudio-2026.01.1-403-amd64.deb
 
 # Install Thonny
-sudo apt -y install thonny
-sudo pip install requests
-sudo pip install biopython
+sudo apt -y install thonny python3-pip
+sudo -u student python3 -m pip install --user requests biopython
 
 # Install course data
 sudo wget --quiet -O ~student/bigdata.tar.gz http://www.bioinformatics.babraham.ac.uk/training/bigdata/bigdata.tar.gz

@@ -12,6 +12,7 @@
 ./programs/bismark.sh
 ./programs/samtools.sh
 ./programs/seqmonk.sh
+./programs/nextflow.sh
 
 # Install course data
 sudo wget -O ~student/meth_data.tar http://www.bioinformatics.babraham.ac.uk/training/Methylation_Course/Meth_Course_Data_Small.tar

@@ -1,8 +1,28 @@
-#!/bin/bash
-sudo apt install -y --no-install-recommends software-properties-common dirmngr libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+#!/usr/bin/env bash
 
-wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+set -euo pipefail
 
-sudo add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+# Install required tools
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    gnupg
 
-sudo apt -y install r-base
+# Add CRAN GPG key
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/cran.gpg
+
+# Add CRAN repository for Ubuntu 24.04 (Noble)
+echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/" \
+  | sudo tee /etc/apt/sources.list.d/cran-r.list
+
+# Update package lists
+sudo apt-get update
+
+# Install R
+sudo apt-get install -y r-base r-base-dev
+
+# Verify installation
+R --version

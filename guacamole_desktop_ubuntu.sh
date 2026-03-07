@@ -17,11 +17,11 @@ sudo useradd -m -G sudo -d /home/student -s /bin/bash student
 sudo apt update
 sudo apt -y install build-essential cmake libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev libvncserver-dev freerdp2-dev libssh2-1-dev libtelnet-dev libwebsockets-dev libpulse-dev libvorbis-dev libwebp-dev libssl-dev libpango1.0-dev libswscale-dev libavcodec-dev libavutil-dev libavformat-dev
 
-wget https://archive.apache.org/dist/guacamole/1.5.0/source/guacamole-server-1.5.0.tar.gz
+wget https://archive.apache.org/dist/guacamole/1.6.0/source/guacamole-server-1.6.0.tar.gz
 
-tar -xf guacamole-server-1.5.0.tar.gz
+tar -xf guacamole-server-1.6.0.tar.gz
 
-cd guacamole-server-1.5.0/
+cd guacamole-server-1.6.0/
 
 ./configure --with-init-dir=/etc/init.d
 
@@ -38,17 +38,24 @@ sudo systemctl start guacd
 #systemctl status guacd
 
 # Install the tomcat server which will host the web front end.
-sudo apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
+sudo apt -y install tomcat10 tomcat10-admin tomcat10-common tomcat10-user
 
 # Move back into the main directory
 cd ..
 
 # Donwload and install the guacamole web app.
-wget https://archive.apache.org/dist/guacamole/1.5.0/binary/guacamole-1.5.0.war
+wget https://archive.apache.org/dist/guacamole/1.6.0/binary/guacamole-1.6.0.war
 
-sudo mv guacamole-1.5.0.war /var/lib/tomcat9/webapps/guacamole.war
+# We need to migrate the war file to tomcat 10
+wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.10/binaries/jakartaee-migration-1.0.10-bin.tar.gz
+tar -xzf jakartaee-migration-1.0.10-bin.tar.gz
 
-sudo systemctl restart tomcat9 guacd
+./jakartaee-migration-1.0.10/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
+
+# Now we can move the war file to the correct directory
+sudo mv guacamole-1.6.0_tomcat10.war /var/lib/tomcat10/webapps/guacamole.war
+
+sudo systemctl restart tomcat10 guacd
 
 # Make the configuration files for guacamole
 sudo mkdir /etc/guacamole/
@@ -66,19 +73,28 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 # The additional env variable should stop apt from prompting to set a
 # display manager and will hopefully just pick a default (I don't really
 # care what it picks)
-sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server
+sudo DEBIAN_FRONTEND=noninteractive apt -y install xfce4 xfce4-goodies tigervnc-standalone-server dbus-x11
 
-sudo systemctl restart tomcat9 guacd
+sudo systemctl restart tomcat10 guacd
 
 sudo mkdir ~student/.vnc
 
-sudo sh -c 'echo "#!/bin/sh
+sudo sh -c 'echo "#!/bin/bash
+
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-export BROWSER=firefox
-/usr/bin/startxfce4
-[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
-[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+
+#export BROWSER=firefox
+
+export HOME=/home/\$USER
+export XDG_CONFIG_HOME=\$HOME/.config
+export XDG_DATA_HOME=\$HOME/.local/share
+export XDG_RUNTIME_DIR=/run/user/\$(id -u)
+
+mkdir -p \$XDG_CONFIG_HOME
+mkdir -p \$XDG_DATA_HOME
+
+exec dbus-run-session -- xfce4-session
 " > ~student/.vnc/xstartup'
 
 sudo chmod 755 ~student/.vnc/xstartup
@@ -98,12 +114,20 @@ sleep 10
 xset s 0 0
 " > ~student/.config/autostart/xset.sh'
 
-chown -R student:student ~student/.config
-chmod 755 ~student/.config/autostart/*
+sudo chown -R student:student ~student/.config
+sudo chmod 755 ~student/.config/autostart/*
 
+# We need to ensure that the correct run folder is present
+sudo loginctl enable-linger student
+
+# We need to ensure that the student's xfce4 config directory
+# is present and owned by student
+
+sudo mkdir -p ~student/.config/xfce4
+sudo chown -R student:student ~student/.config
 
 # Reset the XFCE background
-sudo cp images/xfce_background.png /usr/share/backgrounds/xfce/xfce-verticals.png
+sudo cp images/biotrain_desktop_background.svg /usr/share/backgrounds/xfce/xfce-shapes.svg
 
 # Set up apache as a proxy server
 sudo apt -y install apache2
