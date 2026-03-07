@@ -10,7 +10,7 @@ Eventually we will make the output of these images available as EC2 AMI images s
 
 The steps to do this will be as follows:
 
-1. Start a new EC2 instance using the name of the OS in the image name (eg CentOS7) to select the base image to start from.  You can set your desired amount of CPU / Memory / Disk but the images we use for training are using the t2.medium servers and 50GB storage.
+1. Start a new EC2 instance using the name of the OS in the image name (eg Ubuntu 24.04) to select the base image to start from.  You can set your desired amount of CPU / Memory / Disk but the images we use for training are using the t2.medium servers and 50GB storage.
 
 2. Set a suitable security group.  You will need both SSH (TCP/UDP port 22) and HTTP (TCP/UDP port 80) access to the server.
 
@@ -24,7 +24,7 @@ The steps to do this will be as follows:
 
 7. Move into the new repository folder ```cd aws_training_images```
 
-8. Execute the script for the image you want to build. It's a good idea to do this as a nohup command and redirect the output to a log file ```nohup ./rstudio_server_centos7.sh > ~/build.log &```
+8. Execute the script for the image you want to build. It's a good idea to do this as a nohup command and redirect the output to a log file ```nohup ./rstudio_server.sh > ~/build.log &```
 
 9. Once the build is complete visit the IP of the server in a web browser (eg http://1.2.3.4)
 
