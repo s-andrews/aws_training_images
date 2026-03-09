@@ -29,6 +29,11 @@ sudo /usr/local/bin/Rscript -e "install.packages('BiocManager', repos='https://c
 
 sudo /usr/local/bin/Rscript -e "BiocManager::install('MSstatsShiny')"
 
+sudo /usr/local/bin/Rscript -e "install.packages('missForest', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('tidyheatmaps', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('rstatix', repos='https://cloud.r-project.org')"
+
+
 
 # Install intro course data
 sudo yum -y install wget
