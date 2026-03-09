@@ -3,7 +3,7 @@
 # (templated installs).
 
 # R is in EPEL so we need to set that repository up first
-sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
 
 # We need to enable the CRB repository to ensure EPEL packages work properly
 sudo /usr/bin/crb enable
@@ -14,9 +14,9 @@ sudo /usr/bin/crb enable
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.4.1
+export R_VERSION=4.5.2
 
-sudo -E dnf -y install https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
+sudo -E dnf -y install https://cdn.posit.co/r/rhel-10/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
 # We also need to add this to the PATH since it gets installed into /opt by default.
 # We'll take the shortcut of just linking it to /usr/local/bin.  If we don't do this
@@ -34,7 +34,7 @@ sudo dnf -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2024.04.2-764-x86_64.rpm
+sudo dnf -y install https://download2.rstudio.org/server/rhel9/x86_64/rstudio-server-rhel-2026.01.1-403-x86_64.rpm
 
 # Change the logo on the login page to ours
 sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
