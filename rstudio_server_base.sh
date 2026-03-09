@@ -36,8 +36,8 @@ sudo dnf -y groupinstall "Development Tools"
 
 sudo dnf -y install https://download2.rstudio.org/server/rhel9/x86_64/rstudio-server-rhel-2026.01.1-403-x86_64.rpm
 
-# Change the logo on the login page to ours
-sudo cp images/bioinformatics_logo_78x28.png /usr/lib/rstudio-server/www/images/rstudio.png
+# Change the logo on the login page to ours. We reuse the guacamole SVG which is just the light version of our logo
+sudo cp images/guacamole_logo.svg /usr/lib/rstudio-server/www/images/Posit-ProductLogo_rst-server-full-color.svg
 
 # Create the user we're going to use and make sure their home
 # directory is also created since useradd doesn't do this by
