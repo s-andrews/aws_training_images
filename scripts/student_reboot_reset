@@ -55,9 +55,18 @@ chown -R student:student ~student/.vnc
 chmod 600 ~student/.vnc/passwd
 
 # Restart guacamole
+# This has been problematic in that guacd wasn't starting properly
+# so we're going to be more forceful here.
+systemctl stop tomcat10 guacd
+
+# Force kill any guacd processes which are still running.  We need
+# the || true in case nothing is there to be killed in which case
+# the script would stop because of the set -e at the top
+killall -9 guacd || true
+
+# Restart guacd and tomcat10
 systemctl restart tomcat10 guacd
 
 # Start VNC
-systemctl restart tomcat10 guacd
 sudo su student -c 'cd /home/student; vncserver -depth 24 -geometry 1280x800'
 
