@@ -100,6 +100,14 @@ sudo sh -c 'echo "
 <VirtualHost *:80>
   ProxyPreserveHost On
   ProxyRequests Off
+
+  RewriteEngine On
+
+  # Handle websocket connections
+  RewriteCond %{HTTP:Upgrade} =websocket [NC]
+  RewriteRule /(.*) ws://127.0.0.1:8787/$1 [P,L]
+
+  # Normal HTTP proxy
   ProxyPass / http://127.0.0.1:8787/
   ProxyPassReverse / http://127.0.0.1:8787/
 </VirtualHost>
