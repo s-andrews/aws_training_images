@@ -3,7 +3,7 @@
 # Depends on R being installed already.
 # We should probably test for it
 
-sudo wget -O /opt/seqmonk.tar.gz https://github.com/s-andrews/SeqMonk/releases/download/v1.49.1/seqmonk_v1.49.1_linux64.tar.gz
+sudo wget -O /opt/seqmonk.tar.gz https://github.com/s-andrews/SeqMonk/releases/download/v1.49.2/seqmonk_v1.49.2_linux64.tar.gz
 
 sudo tar -C /opt/ -xzf /opt/seqmonk.tar.gz
 sudo ln -s /opt/SeqMonk/seqmonk /usr/local/bin/
