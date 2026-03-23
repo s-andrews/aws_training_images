@@ -11,6 +11,7 @@ sudo /usr/local/bin/Rscript -e "install.packages('tidymodels', repos='https://cl
 sudo /usr/local/bin/Rscript -e "install.packages('ranger', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('kknn', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "install.packages('brulee', repos='https://cloud.r-project.org')"
+sudo /usr/local/bin/Rscript -e "install.packages('vip', repos='https://cloud.r-project.org')"
 sudo /usr/local/bin/Rscript -e "torch::install_torch()"
 
 # Install intro course data
