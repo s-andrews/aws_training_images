@@ -14,7 +14,7 @@ sudo /usr/bin/crb enable
 #
 # Note that we will need to update this if we want to move to a newer version of
 # R
-export R_VERSION=4.5.2
+export R_VERSION=4.6.1
 
 sudo -E dnf -y install https://cdn.posit.co/r/rhel-10/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
@@ -34,7 +34,7 @@ sudo dnf -y groupinstall "Development Tools"
 # maybe do something clever where we parse it from the 
 # download page HTML
 
-sudo dnf -y install https://download2.rstudio.org/server/rhel9/x86_64/rstudio-server-rhel-2026.01.1-403-x86_64.rpm
+sudo dnf -y install https://download2.rstudio.org/server/rhel9/x86_64/rstudio-server-rhel-2026.09.0-174-x86_64.rpm
 
 # Change the logo on the login page to ours. We reuse the guacamole SVG which is just the light version of our logo
 sudo cp images/guacamole_logo.svg /usr/lib/rstudio-server/www/images/Posit-ProductLogo_rst-server-full-color.svg
