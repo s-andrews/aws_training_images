@@ -47,10 +47,10 @@ cd ..
 wget https://archive.apache.org/dist/guacamole/1.6.0/binary/guacamole-1.6.0.war
 
 # We need to migrate the war file to tomcat 10
-wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.10/binaries/jakartaee-migration-1.0.10-bin.tar.gz
-tar -xzf jakartaee-migration-1.0.10-bin.tar.gz
+wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.13/binaries/jakartaee-migration-1.0.13-bin.tar.gz
+tar -xzf jakartaee-migration-1.0.13-bin.tar.gz
 
-./jakartaee-migration-1.0.10/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
+./jakartaee-migration-1.0.13/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
 
 # Now we can move the war file to the correct directory
 sudo mv guacamole-1.6.0_tomcat10.war /var/lib/tomcat10/webapps/guacamole.war
