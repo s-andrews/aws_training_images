@@ -28,8 +28,8 @@ sudo apt update
 # There sometimes seems to be a snap version of firefox installed
 # already at this point, so we're removing that and then installing
 # the new version
-sudo apt remove firefox
-sudo apt install firefox
+sudo apt -y remove firefox
+sudo apt -y install firefox
 
 
 # Because this is a fresh install we want to bypass the normal first
