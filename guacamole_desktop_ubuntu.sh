@@ -47,10 +47,10 @@ cd ..
 wget https://archive.apache.org/dist/guacamole/1.6.0/binary/guacamole-1.6.0.war
 
 # We need to migrate the war file to tomcat 10
-wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.10/binaries/jakartaee-migration-1.0.10-bin.tar.gz
-tar -xzf jakartaee-migration-1.0.10-bin.tar.gz
+wget https://dlcdn.apache.org/tomcat/jakartaee-migration/v1.0.13/binaries/jakartaee-migration-1.0.13-bin.tar.gz
+tar -xzf jakartaee-migration-1.0.13-bin.tar.gz
 
-./jakartaee-migration-1.0.10/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
+./jakartaee-migration-1.0.13/bin/migrate.sh guacamole-1.6.0.war guacamole-1.6.0_tomcat10.war
 
 # Now we can move the war file to the correct directory
 sudo mv guacamole-1.6.0_tomcat10.war /var/lib/tomcat10/webapps/guacamole.war
@@ -70,6 +70,17 @@ basic-user-mapping: /etc/guacamole/user-mapping.xml
 
 
 # Now set up VNC
+# Install a Guacamole 1.6.0 browser extension which limits initial and subsequent
+# desktop sizes to 1920x1080, preserving the browser's aspect ratio. It uses CSS
+# pixels instead of device pixels so Retina screens do not make text tiny.
+# Guacamole's normal auto-fit scales the result to fill the browser window.
+# Change MAX_WIDTH / MAX_HEIGHT in display-size.js to adjust the limit.
+sudo apt -y install zip
+sudo mkdir -p /etc/guacamole/extensions
+sudo zip -j /etc/guacamole/extensions/training-desktop-resolution.jar \
+    scripts/guacamole-display-size/guac-manifest.json \
+    scripts/guacamole-display-size/display-size.js
+
 # The additional env variable should stop apt from prompting to set a
 # display manager and will hopefully just pick a default (I don't really
 # care what it picks)

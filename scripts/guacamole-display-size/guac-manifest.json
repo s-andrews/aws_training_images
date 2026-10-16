@@ -1,0 +1,6 @@
+{
+    "guacamoleVersion": "1.6.0",
+    "name": "Training desktop resolution limit",
+    "namespace": "training-desktop-resolution",
+    "js": ["display-size.js"]
+}
