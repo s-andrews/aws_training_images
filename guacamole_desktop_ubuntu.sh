@@ -189,7 +189,7 @@ sudo cp scripts/student_reboot_reset /usr/local/bin/
 
 # Add the launching of the script to the reboot cron
 sudo sh -c 'echo "
-@reboot root /usr/local/bin/student_reboot_reset
+@reboot root sleep 30 && /usr/local/bin/student_reboot_reset
 " > /etc/cron.d/reset_password'
 
 # Install firefox
